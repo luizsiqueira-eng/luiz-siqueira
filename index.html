@@ -794,6 +794,9 @@
         } else {
           backToTop.style.display = "none";
         }
+        if (window.scrollY < 100) {
+          navLinks.forEach(function (link) { link.classList.remove("active"); });
+        }
       });
       backToTop.addEventListener("click", function () {
         window.scrollTo({ top: 0, behavior: "smooth" });
