@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <meta
       name="description"
-      content="Luiz Siqueira é palestrante, engenheiro de software e especialista em soluções para Publish. Descubra mais sobre sua trajetória, palestras e conteúdos."
+      content="Luiz Siqueira é Engenheiro de Software e Líder de Times de Alta Performance. Especialista em formar engenheiros que entendem negócio e entregam valor real. Palestrante em eventos de tecnologia."
     />
     <meta name="keywords" content="Luiz Siqueira" />
     <meta name="author" content="Luiz Siqueira" />
@@ -210,7 +210,34 @@
       }
       .card img {
         width: 100%;
+        height: 200px;
+        object-fit: cover;
         border-radius: 10px;
+      }
+      #back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #ff6600;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transition: opacity 0.3s, transform 0.3s;
+        z-index: 999;
+      }
+      #back-to-top:hover {
+        transform: translateY(-3px);
+      }
+      nav a.active {
+        color: #ff6600;
       }
       .card h3 {
         margin-top: 1rem;
@@ -449,7 +476,7 @@
     </header>
 
     <section class="hero">
-      <video autoplay muted playsinline loop>
+      <video autoplay muted playsinline loop poster="thumbnail.jpg">
         <source src="luiz.mov" type="video/mp4" />
         <track
           src="subtitles.vtt"
@@ -591,6 +618,7 @@
         <div class="card">
           <a
             href="https://www.linkedin.com/pulse/sua-estrat%C3%A9gia-digital-pode-estar-falhando-por-motivos-luiz-siqueira-pzbef/"
+            target="_blank"
           >
             <img
               src="https://media.licdn.com/dms/image/v2/D4D12AQGJO66NIZW3kg/article-cover_image-shrink_720_1280/B4DZXzOyuTGkAI-/0/1743542496762?e=2147483647&v=beta&t=apwDy7uTtnG990LoeE3yBAKE8pFa5z94VWBxaS4vWro"
@@ -605,6 +633,7 @@
         <div class="card">
           <a
             href="https://www.linkedin.com/pulse/google-core-update-de-abril-2025-impacto-seu-e-luiz-siqueira-tgcjf/?trackingId=L93qIO%2BVRIqlt0%2BYAb%2B7cw%3D%3D"
+            target="_blank"
           >
             <img
               src="https://media.licdn.com/dms/image/v2/D4D12AQE9ikJrOeFdSQ/article-cover_image-shrink_720_1280/B4DZXVbROvHIAM-/0/1743042451241?e=2147483647&v=beta&t=z-3pYhawBHq7KbqOvip1OOtbEfQ3fzubSNf2QvA402c"
@@ -620,6 +649,7 @@
         <div class="card">
           <a
             href="https://ne10.uol.com.br/noticias/tecnologia/2023/04/15435246-programador-5-dicas-para-o-conquistar-o-primeiro-emprego.html"
+            target="_blank"
           >
             <img
               src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2022/03/16/806x444/1_datainfo_so_da_elas___divulgacao-20696119.jpg"
@@ -631,6 +661,7 @@
         <div class="card">
           <a
             href="https://jc.uol.com.br/tecnologia/2024/05/07/o-fim-dos-cookies-de-terceiros-um-novo-cenario-para-a-publicidade-digital.html"
+            target="_blank"
           >
             <img
               src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2024/05/06/597x330/1_o_fim_dos_cookies_de_terceiros__um_novo_cenario_para_a_publicidade_digital-27033184.jpg?20250325122504"
@@ -645,6 +676,7 @@
         <div class="card">
           <a
             href="https://www.linkedin.com/pulse/s%C3%B3-conte%C3%BAdo-n%C3%A3o-basta-o-seo-t%C3%A9cnico-faz-toda-luiz-siqueira-fercf"
+            target="_blank"
           >
             <img
               src="https://media.licdn.com/dms/image/v2/D4D12AQEXk7l29bBXEg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1723653089339?e=2147483647&v=beta&t=bR3ZVou5ld9WmbaMY5QRHkPNR0ysbsGJhW63CP1BrEo"
@@ -656,6 +688,7 @@
         <div class="card">
           <a
             href="https://ne10.uol.com.br/noticias/tecnologia/2023/04/15435246-programador-5-dicas-para-o-conquistar-o-primeiro-emprego.html"
+            target="_blank"
           >
             <img
               src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2022/03/16/806x444/1_datainfo_so_da_elas___divulgacao-20696119.jpg"
@@ -667,6 +700,7 @@
         <div class="card">
           <a
             href="https://ne10.uol.com.br/noticias/tecnologia/2023/01/15166957-programador-como-comecar-a-programar-em-6-dicas-valiosas.html"
+            target="_blank"
           >
             <img
               src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2020/09/29/806x444/1_alunos_computador2-16672575.jpg"
@@ -677,6 +711,7 @@
         <div class="card">
           <a
             href="https://ne10.uol.com.br/noticias/tecnologia/2023/05/15462331-curso-de-programacao-em-6-meses-para-ganhar-rs-5-mil-nao-caia-em-conversa-fiada-saiba-como-fazer-carreira-e-ter-bom-salario.html"
+            target="_blank"
           >
             <img
               src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2023/05/16/806x444/1_curso_de_programacao-22996172.jpg"
@@ -691,6 +726,7 @@
         <div class="card">
           <a
             href="https://ne10.uol.com.br/noticias/tecnologia/2023/08/15564213-tecnologias-de-sucesso-o-que-realmente-faz-um-projeto-brilhar.html"
+            target="_blank"
           >
             <img
               src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2023/08/09/806x444/1_tecnologias_de_sucesso_o_que_realmente_faz_um_projeto_brilhar_prancheta_1-23819860.jpg"
@@ -714,6 +750,8 @@
       </form>
     </section> -->
 
+    <button id="back-to-top" title="Voltar ao topo">&#8679;</button>
+
     <footer>
       <div class="footer-links">
         <a href="https://www.linkedin.com/in/luizs" target="_blank">LinkedIn</a>
@@ -724,11 +762,42 @@
       <p class="footer-copy">&copy; 2025 Luiz Siqueira. Todos os direitos reservados.</p>
     </footer>
     <script>
-      document
-        .querySelector(".menu-toggle")
-        .addEventListener("click", function () {
-          document.querySelector("nav").classList.toggle("active");
-        });
+      document.querySelector(".menu-toggle").addEventListener("click", function () {
+        document.querySelector("nav").classList.toggle("active");
+      });
+
+      const backToTop = document.getElementById("back-to-top");
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 400) {
+          backToTop.style.display = "flex";
+        } else {
+          backToTop.style.display = "none";
+        }
+      });
+      backToTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll("nav a");
+      const observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              navLinks.forEach(function (link) {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === "#" + entry.target.id) {
+                  link.classList.add("active");
+                }
+              });
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      sections.forEach(function (section) {
+        observer.observe(section);
+      });
     </script>
   </body>
 </html>
