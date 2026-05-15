@@ -73,17 +73,33 @@
         z-index: 1000;
       }
       #marca {
-        font-size: 1.3rem;
+        font-size: 1rem;
         font-weight: 700;
-        letter-spacing: 0.02em;
-      }
-      #marca span {
-        color: #ff6600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #fff;
       }
       .menu-toggle {
         display: none;
         font-size: 2rem;
         cursor: pointer;
+      }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-left: 2rem;
+        opacity: 0.85;
+        transition: opacity 0.2s, color 0.2s;
+      }
+      nav a:hover,
+      nav a.active {
+        opacity: 1;
+        color: #ff6600;
+        text-decoration: none;
       }
       .hero {
         height: 80vh;
@@ -471,7 +487,7 @@
   </head>
   <body>
     <header>
-      <p id="marca">Luiz <span>Siqueira</span></p>
+      <p id="marca">Luiz Siqueira</p>
       <div class="menu-toggle">&#9776;</div>
       <nav>
         <a href="#sobre">Sobre</a>
