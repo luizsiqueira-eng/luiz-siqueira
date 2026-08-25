@@ -69,6 +69,10 @@
       html {
         scroll-behavior: smooth;
       }
+      html,
+      body {
+        overflow-x: hidden;
+      }
       body {
         margin: 0;
         font-family: 'Inter', Arial, sans-serif;
@@ -159,7 +163,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.45);
+        background: linear-gradient(180deg, rgba(11, 14, 20, 0.35) 0%, rgba(11, 14, 20, 0.55) 55%, rgba(11, 14, 20, 0.75) 100%);
         z-index: 0;
       }
       .hero h1,
@@ -168,22 +172,44 @@
         z-index: 1;
       }
       .hero h1 {
-        font-size: 2rem;
+        font-size: 2.6rem;
         font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
         margin: 0;
+        padding: 0 1.5rem;
+        text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+        text-wrap: balance;
       }
       .hero p {
-        margin: 1rem 0;
-        font-size: 0.9rem;
+        margin: 1rem auto 1.8rem;
+        padding: 0 1.5rem;
+        max-width: 38ch;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.9);
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+      }
+      @media (max-width: 640px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+        .hero p {
+          font-size: 0.95rem;
+        }
       }
       .btn {
         display: inline-block;
-        padding: 0.7rem 1.5rem;
+        padding: 0.9rem 1.9rem;
         font-size: 1rem;
         font-weight: 600;
-        border-radius: 5px;
+        border-radius: 8px;
         text-decoration: none;
-        transition: background 0.2s;
+        box-shadow: 0 6px 18px rgba(47, 107, 255, 0.35);
+        transition: background 0.2s, transform 0.2s;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
       }
       .btn-primary {
         background: var(--accent);
@@ -232,7 +258,7 @@
       #sobre::after {
         content: '';
         position: absolute;
-        inset: 0 -100vmax;
+        inset: 0 calc((100% - 100vw) / 2);
         background: linear-gradient(to bottom, transparent 0%, transparent 80%, var(--navy) 100%);
         pointer-events: none;
       }
@@ -265,8 +291,7 @@
       #feed {
         --section-bg: var(--bg);
       }
-      .slides-grid,
-      .skills-grid {
+      .slides-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         gap: 2rem;
@@ -280,6 +305,12 @@
       .slide-card:hover {
         color: inherit;
         text-decoration: none;
+      }
+      .slides-grid .slide-card img {
+        height: auto;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        background: var(--navy);
       }
       .slide-card h3 {
         font-size: 1.05rem;
@@ -310,9 +341,15 @@
         color: var(--accent);
       }
       .skill-card h3 {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
         font-size: 1.15rem;
-        margin: 0.6rem 0 0.8rem;
+        line-height: 1.35;
+        margin: 0.6rem 0 0.2rem;
+      }
+      .skill-name {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin: 0 0 0.8rem;
       }
       .skill-card p code,
       .section-intro code {
@@ -334,10 +371,24 @@
       }
       .install code {
         flex: 1;
+        min-width: 0;
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
         font-size: 0.85rem;
         overflow-x: auto;
         white-space: nowrap;
+        scrollbar-width: none;
+      }
+      .install code::-webkit-scrollbar {
+        display: none;
+      }
+      .skill-card {
+        min-width: 0;
+      }
+      .skill-card > p:not(.skill-tag):not(.skill-name) {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
       .copy-btn {
         flex-shrink: 0;
@@ -353,6 +404,10 @@
       }
       .copy-btn:hover {
         background: var(--accent-hover);
+      }
+      .section-more {
+        margin: 2rem 0 0;
+        text-align: center;
       }
       #skills .section-intro a {
         color: var(--accent);
@@ -426,14 +481,6 @@
           text-align: center;
           margin: 1rem;
         }
-      }
-      .facts {
-        margin: 1.2rem 0 0.2rem;
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.6);
       }
       .about {
         max-width: 620px;
@@ -670,7 +717,8 @@
       }
       .footer-nav {
         display: flex;
-        gap: 2rem;
+        flex-wrap: wrap;
+        gap: 0.6rem 2rem;
       }
       .footer-nav a {
         color: var(--footer-link);
@@ -725,6 +773,9 @@
         .footer-nav,
         .footer-social {
           justify-content: center;
+        }
+        .footer-nav {
+          gap: 0.8rem 1.4rem;
         }
         .footer-copy {
           text-align: center;
@@ -918,7 +969,7 @@
         <a href="#sobre">Sobre</a>
         <a href="#palestras">Palestras</a>
         <a href="#slides">Slides</a>
-        <a href="#skills">Skills</a>
+        <a href="/skills/">Skills</a>
         <a href="#feed">Artigos</a>
       </nav>
     </header>
@@ -934,7 +985,6 @@
 
     <section class="section" id="sobre">
       <h2>Sobre Luiz Siqueira</h2>
-      <p class="facts">+10 anos em engenharia · 1,2 bilhão de acessos · Cofundador do Papo de Dev · Conselheiro da PHP Pernambuco</p>
       <div class="social-links">
         <a href="https://www.linkedin.com/in/luizs" target="_blank">
           <img src="link.png" alt="LinkedIn" />
@@ -1057,7 +1107,7 @@
 
     <section class="section" id="slides">
       <h2>Slides</h2>
-      <p class="section-intro">Material das palestras, para baixar e reaproveitar.</p>
+      <p class="section-intro">Material das palestras.</p>
       <div class="slides-grid">
         <a class="card slide-card" href="slides/alem-do-codigo.pdf" target="_blank" rel="noopener">
           <img src="slides/alem-do-codigo-capa.jpg" alt="Capa dos slides: Além do Código" loading="lazy" width="1200" height="675" />
@@ -1071,27 +1121,28 @@
     <section class="section" id="skills">
       <h2>Skills para agentes de IA</h2>
       <p class="section-intro">
-        Fluxos de engenharia que uso com meus times, empacotados como skills do Claude Code —
-        públicos, neutros de empresa e prontos para adaptar ao seu contexto.
-        Código aberto em <a href="https://github.com/luizsiqueira-eng/skills" target="_blank" rel="noopener">github.com/luizsiqueira-eng/skills</a>.
+        Fluxo de Git Flow para usar o GitHub seguindo as boas práticas.
       </p>
-      <div class="skills-grid">
-        <div class="card skill-card">
-          <p class="skill-tag">Git flow · Code review · Release</p>
-          <h3>fluxo-de-entrega</h3>
-          <p>
-            Do card ao deploy: branch e commit com número do card e descrição em inglês
-            (1 branch = 1 commit), PR para <code>develop</code> só depois da validação humana,
-            acompanhamento do code review, release <code>develop &rarr; main</code> sem squash
-            com tag semver/rc, e hotfix a partir da <code>main</code> com PR dupla.
-          </p>
-          <div class="install">
-            <code id="install-fluxo">npx @luizsiqueira/skills add fluxo-de-entrega</code>
-            <button type="button" class="copy-btn" data-copy="install-fluxo" aria-label="Copiar comando">Copiar</button>
+      <div class="carousel">
+        <button class="carousel-btn prev" aria-label="Skill anterior">&#8249;</button>
+        <div class="skills carousel-track" id="skills-track">
+          <div class="card skill-card">
+            <p class="skill-tag">Git flow · Code review · Release</p>
+            <h3>Git Flow Delivery — do card ao deploy</h3>
+            <p class="skill-name">git-flow-delivery</p>
+            <p>
+              Branch, commit, PR, release e hotfix seguindo o Git Flow, com integração opcional ao Jira.
+            </p>
+            <div class="install">
+              <code id="install-fluxo">npx @luizsiqueira/skills add git-flow-delivery</code>
+              <button type="button" class="copy-btn" data-copy="install-fluxo" aria-label="Copiar comando">Copiar</button>
+            </div>
+            <a class="skill-link" href="https://github.com/luizsiqueira-eng/skills/blob/main/skills/git-flow-delivery/SKILL.md" target="_blank" rel="noopener">Ler a skill &rarr;</a>
           </div>
-          <a class="skill-link" href="https://github.com/luizsiqueira-eng/skills/blob/main/skills/fluxo-de-entrega/SKILL.md" target="_blank" rel="noopener">Ler a skill &rarr;</a>
         </div>
+        <button class="carousel-btn next" aria-label="Próxima skill">&#8250;</button>
       </div>
+      <p class="section-more"><a class="btn btn-primary" href="/skills/">Ver todas as skills e instalar</a></p>
     </section>
 
     <section class="section" id="feed">
@@ -1245,7 +1296,7 @@
           <a href="#sobre">Sobre</a>
           <a href="#palestras">Palestras</a>
           <a href="#slides">Slides</a>
-          <a href="#skills">Skills</a>
+          <a href="/skills/">Skills</a>
           <a href="#feed">Artigos</a>
         </nav>
         <div class="footer-social">
@@ -1294,7 +1345,52 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
 
-      document.querySelectorAll(".copy-btn").forEach(function (btn) {
+      (async function loadSkills() {
+        const track = document.getElementById("skills-track");
+        const sources = [
+          "https://raw.githubusercontent.com/luizsiqueira-eng/skills/main/skills.json",
+          "skills/skills.json",
+        ];
+        let catalog = null;
+        for (const url of sources) {
+          try { const r = await fetch(url, { cache: "no-store" }); if (r.ok) { catalog = await r.json(); break; } } catch (e) {}
+        }
+        if (!catalog || !catalog.skills || !catalog.skills.length) return;
+        const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        const skills = [...catalog.skills].sort((a, b) => (b.added || "").localeCompare(a.added || ""));
+        track.innerHTML = skills.map(function (sk, i) {
+          const cmd = "npx " + catalog.package + " add " + sk.name;
+          const tags = (sk.tags || []).slice(0, 3).map((t) => t.replace(/-/g, " ")).join(" · ");
+          return '<div class="card skill-card">' +
+            (tags ? '<p class="skill-tag">' + esc(tags) + '</p>' : '') +
+            '<h3>' + esc(sk.title || sk.name) + '</h3>' +
+            '<p class="skill-name">' + esc(sk.name) + '</p>' +
+            '<p>' + esc(sk.description) + '</p>' +
+            '<div class="install"><code id="install-' + i + '">' + esc(cmd) + '</code>' +
+            '<button type="button" class="copy-btn" data-copy="install-' + i + '" aria-label="Copiar comando">Copiar</button></div>' +
+            '<a class="skill-link" href="' + esc(catalog.repo) + '/blob/main/skills/' + esc(sk.name) + '/SKILL.md" target="_blank" rel="noopener">Ler a skill &rarr;</a>' +
+          '</div>';
+        }).join("");
+        bindCopyButtons(track);
+        window.dispatchEvent(new Event("resize"));
+      })();
+
+      function bindCopyButtons(root) {
+        root.querySelectorAll(".copy-btn").forEach(function (btn) {
+          if (btn.dataset.bound) return;
+          btn.dataset.bound = "1";
+          btn.addEventListener("click", function () {
+            const text = document.getElementById(btn.dataset.copy).textContent;
+            navigator.clipboard.writeText(text).then(function () {
+              btn.textContent = "Copiado!";
+              setTimeout(function () { btn.textContent = "Copiar"; }, 1800);
+            });
+          });
+        });
+      }
+      bindCopyButtons(document);
+
+      document.querySelectorAll(".copy-btn--unused").forEach(function (btn) {
         btn.addEventListener("click", function () {
           const text = document.getElementById(btn.dataset.copy).textContent;
           navigator.clipboard.writeText(text).then(function () {
