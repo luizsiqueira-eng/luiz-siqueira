@@ -167,18 +167,22 @@
         background: linear-gradient(180deg, rgba(11, 14, 20, 0.35) 0%, rgba(11, 14, 20, 0.55) 55%, rgba(11, 14, 20, 0.92) 92%, var(--navy) 100%);
         z-index: 1;
       }
+      /* Mobile: vídeo ocupa o hero todo, topo CLARO (o cabelo escuro não some no overlay)
+         e o texto desce para a base, onde o gradiente é forte. */
       @media (max-width: 768px) {
-        /* o vídeo desce dentro do hero; a faixa que sobra em cima é escura e se funde com o header */
         .hero {
+          justify-content: flex-end;
+          padding-bottom: 2.6rem;
           background: var(--navy);
         }
         .hero video {
-          top: 16%;
-          height: 84%;
           object-position: 50% 0%;
         }
         .hero::after {
-          background: linear-gradient(180deg, var(--navy) 0%, var(--navy) 16%, rgba(11, 14, 20, 0.5) 34%, rgba(11, 14, 20, 0.5) 62%, rgba(11, 14, 20, 0.92) 92%, var(--navy) 100%);
+          background: linear-gradient(180deg, rgba(11, 14, 20, 0.12) 0%, rgba(11, 14, 20, 0.2) 38%, rgba(11, 14, 20, 0.62) 68%, rgba(11, 14, 20, 0.95) 92%, var(--navy) 100%);
+        }
+        .hero h1 {
+          font-size: 2.05rem;
         }
       }
       .hero-content {
