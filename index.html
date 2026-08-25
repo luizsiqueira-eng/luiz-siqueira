@@ -4,15 +4,18 @@
     <!-- Meta Tags Essenciais -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%230f1f3d'/><text x='50' y='62' font-size='52' font-family='Arial' font-weight='700' fill='%23ff6600' text-anchor='middle'>LS</text></svg>" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <meta name="theme-color" content="#0b0e14" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <meta
       name="description"
-      content="Luiz Siqueira é Engenheiro de Software e Líder de Times de Alta Performance. Especialista em formar engenheiros que entendem negócio e entregam valor real. Palestrante em eventos de tecnologia."
+      content="Luiz Siqueira é Engenheiro de Software e Líder de Times de Alta Performance. Forma engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco."
     />
-    <meta name="keywords" content="Luiz Siqueira" />
+    <meta name="keywords" content="Luiz Siqueira, liderança de engenharia, times de alta performance, engenharia de software, palestrante" />
     <meta name="author" content="Luiz Siqueira" />
     <meta name="robots" content="index, follow" />
 
@@ -23,7 +26,7 @@
     />
     <meta
       property="og:description"
-      content="Luiz Siqueira é palestrante, engenheiro de software e especialista em soluções para Publisher. Descubra mais sobre sua trajetória, palestras e conteúdos."
+      content="Luiz Siqueira é Engenheiro de Software e Líder de Times de Alta Performance. Forma engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco."
     />
     <meta
       property="og:image"
@@ -40,7 +43,7 @@
     />
     <meta
       name="twitter:description"
-      content="Luiz Siqueira é palestrante, engenheiro de software e especialista em soluções para Publish. Descubra mais sobre sua trajetória, palestras e conteúdos."
+      content="Luiz Siqueira é Engenheiro de Software e Líder de Times de Alta Performance. Forma engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco."
     />
     <meta
       name="twitter:image"
@@ -51,17 +54,29 @@
     <link rel="canonical" href="https://luizsiqueira.com.br" />
     <title>Luiz Siqueira | Engenheiro de Software e Líder de Times de Alta Performance</title>
     <style>
+      :root {
+        --navy: #0b0e14;        /* header, footer, destaque escuro */
+        --accent: #2f6bff;      /* botões, hover, detalhes */
+        --accent-hover: #1f56e0;
+        --bg: #f5f7fa;          /* fundo da página */
+        --surface: #ffffff;     /* cards */
+        --text: #1f2937;
+        --heading: #0b0e14;
+        --muted: #6b7280;
+        --footer-link: #a3adc2;
+        --footer-copy: #6b7591;
+      }
       html {
         scroll-behavior: smooth;
       }
       body {
         margin: 0;
         font-family: 'Inter', Arial, sans-serif;
-        color: #333;
-        background-color: #f9f9f9;
+        color: var(--text);
+        background-color: var(--bg);
       }
       header {
-        background-color: #0f1f3d;
+        background-color: var(--navy);
         height: 40px;
         color: #fff;
         padding: 1rem;
@@ -73,18 +88,34 @@
         z-index: 1000;
       }
       #marca {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        text-decoration: none;
         font-size: 1rem;
         font-weight: 700;
         letter-spacing: 0.18em;
         text-transform: uppercase;
         color: #fff;
       }
+      #marca .logo {
+        flex-shrink: 0;
+      }
+      #marca:hover {
+        color: #fff;
+        text-decoration: none;
+      }
       .menu-toggle {
         display: none;
         font-size: 2rem;
+        line-height: 1;
         cursor: pointer;
+        background: none;
+        border: none;
+        color: #fff;
+        padding: 0 0.25rem;
       }
-      nav a {
+      header nav a {
         color: #fff;
         text-decoration: none;
         font-size: 0.85rem;
@@ -95,10 +126,10 @@
         opacity: 0.85;
         transition: opacity 0.2s, color 0.2s;
       }
-      nav a:hover,
-      nav a.active {
+      header nav a:hover,
+      header nav a.active {
         opacity: 1;
-        color: #ff6600;
+        color: var(--accent);
         text-decoration: none;
       }
       .hero {
@@ -131,45 +162,240 @@
         background: rgba(0, 0, 0, 0.45);
         z-index: 0;
       }
-      .hero h2,
+      .hero h1,
       .hero p,
-      .hero button {
+      .hero .btn {
         z-index: 1;
       }
-      .hero h2 {
+      .hero h1 {
         font-size: 2rem;
+        font-weight: 700;
         margin: 0;
       }
       .hero p {
         margin: 1rem 0;
         font-size: 0.9rem;
       }
-      .hero button {
+      .btn {
+        display: inline-block;
         padding: 0.7rem 1.5rem;
         font-size: 1rem;
-        background: #ff6600;
-        border: none;
-        color: #fff;
-        cursor: pointer;
+        font-weight: 600;
         border-radius: 5px;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--accent-hover);
+        color: #fff;
+        text-decoration: none;
       }
       .section {
+        scroll-margin-top: 72px;
         padding: 4rem 2rem;
         max-width: 1200px;
         margin: auto;
+        /* fundo ocupa a largura toda mesmo com max-width */
+        box-shadow: 0 0 0 100vmax var(--section-bg, transparent);
+        clip-path: inset(0 -100vmax);
+        background: var(--section-bg, transparent);
+      }
+      #sobre {
+        --section-bg: var(--navy);
+        position: relative;
+        color: rgba(255, 255, 255, 0.85);
+      }
+      /* foto como marca d'água: ocupa a largura toda da viewport, ancorada à direita */
+      #sobre::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        /* termina na borda direita da viewport (a seção é centralizada) */
+        right: calc((100% - 100vw) / 2);
+        left: 42%;
+        background: url('sobre-bg.jpg') 62% bottom / auto 88% no-repeat;
+        opacity: 0.9;
+        /* bordas suaves em todos os lados: a foto se dissolve no fundo da seção */
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%, #000 100%),
+          linear-gradient(to bottom, transparent 0%, #000 30%, #000 80%, transparent 100%);
+        -webkit-mask-composite: source-in;
+        mask-image: linear-gradient(to right, transparent 0%, #000 45%, #000 100%),
+          linear-gradient(to bottom, transparent 0%, #000 30%, #000 80%, transparent 100%);
+        mask-composite: intersect;
+        pointer-events: none;
+      }
+      #sobre::after {
+        content: '';
+        position: absolute;
+        inset: 0 -100vmax;
+        background: linear-gradient(to bottom, transparent 0%, transparent 80%, var(--navy) 100%);
+        pointer-events: none;
+      }
+      #sobre > * {
+        position: relative;
+        z-index: 1;
+      }
+      #sobre h2 {
+        color: #fff;
+      }
+      #sobre a {
+        color: #fff;
+        font-weight: 600;
+      }
+      #sobre a:hover {
+        color: var(--accent);
+      }
+      #palestras {
+        --section-bg: var(--surface);
+      }
+      #palestras .card {
+        border: 1px solid #e6e8ee;
+      }
+      #slides {
+        --section-bg: var(--bg);
+      }
+      #skills {
+        --section-bg: var(--surface);
+      }
+      #feed {
+        --section-bg: var(--bg);
+      }
+      .slides-grid,
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      .slide-card {
+        display: flex;
+        flex-direction: column;
+        color: inherit;
+      }
+      .slide-card:hover {
+        color: inherit;
+        text-decoration: none;
+      }
+      .slide-card h3 {
+        font-size: 1.05rem;
+        line-height: 1.35;
+      }
+      .slide-meta {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0.4rem 0 1rem;
+      }
+      .slide-cta,
+      .skill-link {
+        color: var(--accent);
+        font-weight: 600;
+        margin-top: auto;
+      }
+      .skill-card {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e6e8ee;
+      }
+      .skill-tag {
+        margin: 0;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .skill-card h3 {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 1.15rem;
+        margin: 0.6rem 0 0.8rem;
+      }
+      .skill-card p code,
+      .section-intro code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.9em;
+        background: var(--bg);
+        padding: 0.1em 0.4em;
+        border-radius: 4px;
+      }
+      .install {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: var(--navy);
+        color: #fff;
+        border-radius: 8px;
+        padding: 0.7rem 0.9rem;
+        margin: 1.2rem 0 1rem;
+      }
+      .install code {
+        flex: 1;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+      .copy-btn {
+        flex-shrink: 0;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 0.4rem 0.7rem;
+        font: inherit;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .copy-btn:hover {
+        background: var(--accent-hover);
+      }
+      #skills .section-intro a {
+        color: var(--accent);
+        font-weight: 600;
+      }
+      @media (max-width: 900px) {
+        /* no mobile a foto vira uma faixa no alto, e o texto vem abaixo */
+        #sobre {
+          padding-top: 300px;
+        }
+        #sobre::before {
+          left: calc((100% - 100vw) / 2);
+          right: calc((100% - 100vw) / 2);
+          bottom: auto;
+          height: 360px;
+          background: url('sobre-bg.jpg') 57% 4% / auto 150% no-repeat;
+          opacity: 0.95;
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 55%, transparent 100%);
+          -webkit-mask-composite: source-over;
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 55%, transparent 100%);
+          mask-composite: add;
+        }
+        #sobre::after {
+          display: none;
+        }
       }
       .section h2 {
         font-size: 1.8rem;
         font-weight: 700;
         margin-bottom: 0.4rem;
-        color: #111;
+        color: var(--heading);
+      }
+      .section-intro {
+        margin: 1rem 0 0;
+        color: var(--muted);
+        font-size: 1.05rem;
       }
       .section h2::after {
         content: '';
         display: block;
         width: 48px;
         height: 4px;
-        background: #ff6600;
+        background: var(--accent);
         border-radius: 2px;
         margin-top: 0.4rem;
       }
@@ -181,19 +407,19 @@
         .menu-toggle {
           display: block;
         }
-        nav {
+        header nav {
           display: none;
           flex-direction: column;
           position: absolute;
           top: 60px;
           left: 0;
           width: 100%;
-          background-color: #0f1f3d;
+          background-color: var(--navy);
         }
-        nav.active {
+        header nav.active {
           display: flex;
         }
-        nav a {
+        header nav a {
           color: #fff;
           margin-left: 1.5rem;
           text-decoration: none;
@@ -201,25 +427,124 @@
           margin: 1rem;
         }
       }
+      .facts {
+        margin: 1.2rem 0 0.2rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+      }
       .about {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
+        max-width: 620px;
+        margin-top: 1.5rem;
       }
-      .about img {
-        width: 250px;
-        border-radius: 50%;
-        margin-right: 2rem;
+      .quote {
+        margin: 1.4rem 0 1.8rem;
+        padding-left: 1.1rem;
+        border-left: 3px solid var(--accent);
+        font-size: 1.35rem;
+        line-height: 1.4;
+        font-weight: 600;
+        color: #fff;
       }
-      .palestras,
-      .feed {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
+      .about-text p:first-child {
+        margin-top: 0;
+        color: #fff;
+        font-size: 1.05rem;
+      }
+      .about-text p {
+        line-height: 1.75;
+      }
+      @media (max-width: 900px) {
+        .about {
+          max-width: none;
+        }
+      }
+      /* Carrossel (palestras e artigos) */
+      .carousel {
+        position: relative;
         margin-top: 2rem;
       }
+      .carousel-track {
+        display: flex;
+        gap: 2rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        padding: 0.5rem 0 1rem;
+      }
+      .carousel-track::-webkit-scrollbar {
+        display: none;
+      }
+      .carousel-track .card {
+        box-sizing: border-box;
+        flex: 0 0 calc((100% - 4rem) / 3);
+        scroll-snap-align: start;
+      }
+      .carousel-btn {
+        position: absolute;
+        top: 120px;
+        width: 44px;
+        height: 44px;
+        border: none;
+        border-radius: 50%;
+        background: var(--navy);
+        color: #fff;
+        font-size: 1.4rem;
+        line-height: 1;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, opacity 0.2s;
+        z-index: 2;
+      }
+      .carousel-btn:hover {
+        background: var(--accent);
+      }
+      .carousel-btn:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+      .carousel-btn.prev {
+        left: -22px;
+      }
+      .carousel-btn.next {
+        right: -22px;
+      }
+      @media (max-width: 1024px) {
+        .carousel-track .card {
+          flex-basis: calc((100% - 2rem) / 2);
+        }
+      }
+      @media (max-width: 768px) {
+        .section {
+          padding: 2.75rem 1.25rem;
+        }
+        .carousel {
+          margin-top: 1.25rem;
+        }
+        .carousel-track {
+          align-items: flex-start;
+          padding-bottom: 0.5rem;
+        }
+      }
+      @media (max-width: 640px) {
+        .carousel-track .card {
+          flex-basis: 100%;
+        }
+        .carousel-btn.prev {
+          left: 4px;
+        }
+        .carousel-btn.next {
+          right: 4px;
+        }
+      }
       .card {
-        background: #fff;
+        background: var(--surface);
         padding: 1.5rem;
         border-radius: 10px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -239,7 +564,7 @@
         position: fixed;
         bottom: 2rem;
         right: 2rem;
-        background: #ff6600;
+        background: var(--accent);
         color: #fff;
         border: none;
         border-radius: 50%;
@@ -257,11 +582,34 @@
       #back-to-top:hover {
         transform: translateY(-3px);
       }
-      nav a.active {
-        color: #ff6600;
+      header nav a.active {
+        color: var(--accent);
       }
       .card h3 {
         margin-top: 1rem;
+      }
+      .palestras .card p {
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+      }
+      .palestras .card.expanded p {
+        -webkit-line-clamp: unset;
+        display: block;
+      }
+      .read-more {
+        background: none;
+        border: none;
+        padding: 0;
+        color: var(--accent);
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .read-more:hover {
+        text-decoration: underline;
       }
       .contact {
         text-align: center;
@@ -289,30 +637,98 @@
         cursor: pointer;
       }
       footer {
-        background: #0f1f3d;
+        background: var(--navy);
         color: #fff;
-        text-align: center;
-        padding: 2rem 1rem;
-        margin-top: 2rem;
+        margin-top: 0;
       }
-      .footer-links {
+      .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 3rem;
+        align-items: center;
+      }
+      .footer-logo {
+        margin: 0 0 0.4rem;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+      .footer-logo {
         display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-bottom: 1rem;
+        align-items: center;
+        gap: 0.7rem;
       }
-      .footer-links a {
-        color: #aaa;
+      .footer-tagline {
+        margin: 0;
         font-size: 0.9rem;
+        color: var(--footer-link);
+      }
+      .footer-nav {
+        display: flex;
+        gap: 2rem;
+      }
+      .footer-nav a {
+        color: var(--footer-link);
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
         transition: color 0.2s;
       }
-      .footer-links a:hover {
-        color: #ff6600;
+      .footer-nav a:hover {
+        color: #fff;
         text-decoration: none;
       }
+      .footer-social {
+        display: flex;
+        gap: 0.6rem;
+      }
+      .footer-social a {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 50%;
+        color: #fff;
+        transition: background 0.2s, border-color 0.2s;
+      }
+      .footer-social a:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+        text-decoration: none;
+      }
+      .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
       .footer-copy {
-        color: #666;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.2rem 2rem;
+        color: var(--footer-copy);
         font-size: 0.85rem;
+      }
+      @media (max-width: 768px) {
+        .footer-inner {
+          grid-template-columns: 1fr;
+          gap: 1.8rem;
+          text-align: center;
+          padding: 2.5rem 1.5rem;
+        }
+        .footer-nav,
+        .footer-social {
+          justify-content: center;
+        }
+        .footer-copy {
+          text-align: center;
+        }
       }
       .social-links {
         display: flex;
@@ -335,7 +751,7 @@
 
       a:hover {
         text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
-        color: #ff6600; /* Altere para a cor desejada ao passar o mouse */
+        color: var(--accent); /* Altere para a cor desejada ao passar o mouse */
       }
     </style>
     <script type="application/ld+json">
@@ -346,15 +762,15 @@
         "description": "Vídeo da palestra de Luiz Siqueira sobre como a tecnologia pode ser usada para gerar valor e inovação nos negócios.",
         "thumbnailUrl": "https://luizsiqueira.com.br/thumbnail.jpg",
         "uploadDate": "2025-03-26",
-        "contentUrl": "https://luizsiqueira.com.br/luiz.mov",
-        "embedUrl": "https://luizsiqueira.com.br/luiz.mov",
-        "duration": "PT15M",
+        "contentUrl": "https://luizsiqueira.com.br/luiz.mp4",
+        "embedUrl": "https://luizsiqueira.com.br/luiz.mp4",
+        "duration": "PT26S",
         "publisher": {
           "@type": "Organization",
           "name": "Luiz Siqueira",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://luizsiqueira.com.br/logo.jpg"
+            "url": "https://luizsiqueira.com.br/icon-192.png"
           }
         },
         "creator": {
@@ -368,7 +784,8 @@
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Luiz Siqueira",
-        "description": "Engenheiro de Software e Líder de Times de Alta Performance, palestrante e mentor de carreiras em tecnologia.",
+        "description": "Engenheiro de Software e Líder de Times de Alta Performance. Especialista em formar engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco.",
+        "image": "https://luizsiqueira.com.br/thumbnail.jpg",
         "jobTitle": "Engenheiro de Software e Líder de Times de Alta Performance",
         "url": "https://luizsiqueira.com.br",
         "sameAs": [
@@ -376,16 +793,17 @@
           "https://www.instagram.com/luizsiqueira.s",
           "https://github.com/lsiqueira-jc"
         ],
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Sistema Jornal do Commercio de Comunicação (SJCC)"
-        },
         "knowsAbout": [
-          "Tecnologia para sites de conteúdo",
-          "Automatizações com IA",
-          "Carreira em tecnologia",
-          "Criação de produtos digitais",
-          "Desenvolvimento de alta performance"
+          "Liderança de engenharia de software",
+          "Times de alta performance",
+          "Formação de engenheiros",
+          "Inteligência artificial aplicada a times de engenharia",
+          "Produtos digitais",
+          "Carreira em tecnologia"
+        ],
+        "alumniOf": [
+          { "@type": "EducationalOrganization", "name": "Bacharelado em Ciência da Computação" },
+          { "@type": "EducationalOrganization", "name": "Pós-graduação em Arquitetura de Software Full Cycle" }
         ]
       }
     </script>
@@ -399,34 +817,41 @@
           {
             "@type": "CreativeWork",
             "position": 1,
+            "name": "Além do Código: Liderando times de alta performance e entrega de valor na era da IA",
+            "description": "Como o papel do líder técnico se expande na era da IA: capacitar times para pensar como o negócio e usar a tecnologia como alavanca de crescimento.",
+            "image": "https://luizsiqueira.com.br/alemdocodigo.jpg"
+          },
+          {
+            "@type": "CreativeWork",
+            "position": 2,
             "name": "Carreira dev: Como transformar Desafios em Grandes Conquistas",
             "description": "Compartilhando minha jornada de desenvolvedor a líder de equipes de alta performance.",
             "image": "https://luizsiqueira.com.br/phpeste.jpg"
           },
           {
             "@type": "CreativeWork",
-            "position": 2,
+            "position": 3,
             "name": "Criando Produtos de Impacto: A Sinergia entre Tecnologia, Design e Inovação",
             "description": "Explorando como integrar tecnologia, design e inovação para criar produtos digitais de alto impacto.",
             "image": "https://luizsiqueira.com.br/produto.jpg"
           },
           {
             "@type": "CreativeWork",
-            "position": 3,
+            "position": 4,
             "name": "Segredo dos Devs de alta performance",
             "description": "Estratégias para construir e liderar times de desenvolvimento de alta performance.",
             "image": "https://luizsiqueira.com.br/lideranca.jpeg"
           },
           {
             "@type": "CreativeWork",
-            "position": 4,
+            "position": 5,
             "name": "Dominando a tecnologia para sites de conteúdo",
             "description": "Como a tecnologia pode ser um diferencial estratégico para alavancar a audiência de sites de conteúdo.",
             "image": "https://luizsiqueira.com.br/godigital1.jpg"
           },
           {
             "@type": "CreativeWork",
-            "position": 5,
+            "position": 6,
             "name": "Inteligência Artificial em Ação: Como Automatizar Processos com Agentes de IA",
             "description": "Exemplos práticos de automação inteligente com IA para aumentar a eficiência e produtividade.",
             "image": "https://luizsiqueira.com.br/falanorte.jpg"
@@ -439,14 +864,14 @@
       {
         "@context": "https://schema.org",
         "@type": "ItemList",
-        "name": "Notícias & Artigos",
+        "name": "Artigos",
         "itemListElement": [
           {
             "@type": "BlogPosting",
             "position": 1,
             "headline": "Sua estratégia digital pode estar falhando por motivos que você não vê",
             "url": "https://www.linkedin.com/pulse/sua-estrat%C3%A9gia-digital-pode-estar-falhando-por-motivos-luiz-siqueira-pzbef/",
-            "image": "https://media.licdn.com/dms/image/v2/D4D12AQGJO66NIZW3kg/article-cover_image-shrink_720_1280/B4DZXzOyuTGkAI-/0/1743542496762?e=2147483647&v=beta&t=apwDy7uTtnG990LoeE3yBAKE8pFa5z94VWBxaS4vWro",
+            "image": "https://luizsiqueira.com.br/artigos/artigo-1.jpg",
             "datePublished": "2025-03-20"
           },
           {
@@ -454,7 +879,7 @@
             "position": 2,
             "headline": "Google Core Update de Abril de 2025: Impacto no seu Ranqueamento e Estratégias Essenciais",
             "url": "https://www.linkedin.com/pulse/google-core-update-de-abril-2025-impacto-seu-e-luiz-siqueira-tgcjf/",
-            "image": "https://media.licdn.com/dms/image/v2/D4D12AQE9ikJrOeFdSQ/article-cover_image-shrink_720_1280/B4DZXVbROvHIAM-/0/1743042451241?e=2147483647&v=beta&t=z-3pYhawBHq7KbqOvip1OOtbEfQ3fzubSNf2QvA402c",
+            "image": "https://luizsiqueira.com.br/artigos/artigo-2.jpg",
             "datePublished": "2025-04-01"
           },
           {
@@ -462,7 +887,7 @@
             "position": 3,
             "headline": "Programador: 5 dicas para o conquistar o primeiro emprego",
             "url": "https://ne10.uol.com.br/noticias/tecnologia/2023/04/15435246-programador-5-dicas-para-o-conquistar-o-primeiro-emprego.html",
-            "image": "https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2022/03/16/806x444/1_datainfo_so_da_elas___divulgacao-20696119.jpg",
+            "image": "https://luizsiqueira.com.br/artigos/artigo-3.jpg",
             "datePublished": "2023-04-15"
           },
           {
@@ -470,7 +895,7 @@
             "position": 4,
             "headline": "O Fim dos Cookies de Terceiros: Um Novo Cenário para a Publicidade Digital",
             "url": "https://jc.uol.com.br/tecnologia/2024/05/07/o-fim-dos-cookies-de-terceiros-um-novo-cenario-para-a-publicidade-digital.html",
-            "image": "https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2024/05/06/597x330/1_o_fim_dos_cookies_de_terceiros__um_novo_cenario_para_a_publicidade_digital-27033184.jpg?20250325122504",
+            "image": "https://luizsiqueira.com.br/artigos/artigo-4.jpg",
             "datePublished": "2024-05-07"
           },
           {
@@ -478,7 +903,7 @@
             "position": 5,
             "headline": "Só Conteúdo Não Basta: O SEO Técnico Faz Toda a Diferença",
             "url": "https://www.linkedin.com/pulse/s%C3%B3-conte%C3%BAdo-n%C3%A3o-basta-o-seo-t%C3%A9cnico-faz-toda-luiz-siqueira-fercf",
-            "image": "https://media.licdn.com/dms/image/v2/D4D12AQEXk7l29bBXEg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1723653089339?e=2147483647&v=beta&t=bR3ZVou5ld9WmbaMY5QRHkPNR0ysbsGJhW63CP1BrEo",
+            "image": "https://luizsiqueira.com.br/artigos/artigo-5.jpg",
             "datePublished": "2024-05-06"
           }
         ]
@@ -487,35 +912,29 @@
   </head>
   <body>
     <header>
-      <p id="marca">Luiz Siqueira</p>
-      <div class="menu-toggle">&#9776;</div>
-      <nav>
+      <a id="marca" href="#"><svg class="logo" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6l6 6-6 6" stroke="currentColor"/><path d="M13 6l6 6-6 6" stroke="var(--accent)"/></svg>Luiz Siqueira</a>
+      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">&#9776;</button>
+      <nav id="menu">
         <a href="#sobre">Sobre</a>
         <a href="#palestras">Palestras</a>
-        <a href="#feed">Feed</a>
+        <a href="#slides">Slides</a>
+        <a href="#skills">Skills</a>
+        <a href="#feed">Artigos</a>
       </nav>
     </header>
 
     <section class="hero">
-      <video autoplay muted playsinline loop poster="thumbnail.jpg">
-        <source src="luiz.mov" type="video/mp4" />
-        <track
-          src="subtitles.vtt"
-          kind="subtitles"
-          srclang="en"
-          label="English"
-        />
-        Seu navegador não suporta o elemento de vídeo.
+      <video autoplay muted playsinline loop poster="thumbnail.jpg" aria-hidden="true">
+        <source src="luiz.mp4" type="video/mp4" />
       </video>
-      <h2>Times que vão além do código</h2>
+      <h1>Times que vão além do código</h1>
       <p>Liderança, tecnologia e pessoas gerando resultado real.</p>
-      <button onclick="location.href='https://instagram.com/luizsiqueira.s?dm'">
-        Entre em contato
-      </button>
+      <a class="btn btn-primary" href="https://instagram.com/luizsiqueira.s?dm" target="_blank" rel="noopener">Entre em contato</a>
     </section>
 
     <section class="section" id="sobre">
       <h2>Sobre Luiz Siqueira</h2>
+      <p class="facts">+10 anos em engenharia · 1,2 bilhão de acessos · Cofundador do Papo de Dev · Conselheiro da PHP Pernambuco</p>
       <div class="social-links">
         <a href="https://www.linkedin.com/in/luizs" target="_blank">
           <img src="link.png" alt="LinkedIn" />
@@ -525,69 +944,78 @@
         </a>
       </div>
       <div class="about">
+        <div class="about-text">
         <p>
-          <b>Engenheiro de Software e Líder de Times de Alta Performance</b>
+          <b>Líder de Engenharia de Software</b>
         </p>
+        <blockquote class="quote">
+          "O papel da liderança é gerar resultados através das pessoas."
+        </blockquote>
         <p>
-          Com mais de 10 anos de experiência, Luiz Siqueira é especialista em formar engenheiros que
+          Com mais de 10 anos de experiência, bacharel em Ciência da Computação e pós-graduado em
+          Arquitetura de Software Full Cycle, Luiz Siqueira é especialista em formar engenheiros que
           vão além do código. Profissionais que entendem o negócio, tomam decisões com contexto e
           entregam valor real. Ao longo da carreira, formou e liderou times que construíram produtos
-          digitais de grande escala, chegando a contribuir para plataformas que alcançaram a marca de
+          digitais de grande escala, contribuindo para plataformas que alcançaram a marca de
           1,2 bilhão de acessos.
         </p>
         <p>
+          Seu diferencial está em criar ambientes onde as pessoas crescem, ganham autonomia e entregam
+          com consistência. Times que evoluem junto com o produto e trabalham de forma colaborativa e
+          estratégica com outras áreas, fortalecendo a entrega de valor. Especializou-se no uso de
+          inteligência artificial no dia a dia e formou times <em>AI-first</em>, em que a IA
+          potencializa as pessoas para gerar valor ao negócio.
+        </p>
+        <p>
           É cofundador do <a href="https://papodedev.com.br" target="_blank">Papo de Dev</a> e mentor
-          de carreiras em tecnologia. Também é uma das lideranças da
+          de carreiras em tecnologia. Também é conselheiro da comunidade
           <a href="https://www.instagram.com/phppernambuco" target="_blank">PHP Pernambuco</a>,
           contribuindo para o fortalecimento do ecossistema local por meio de conexões, conteúdo
           e colaboração.
         </p>
         <p>
-          Seu diferencial está em criar ambientes onde as pessoas crescem, ganham autonomia e entregam
-          com consistência. Times que evoluem junto com o produto.
+          Além da atuação técnica e de gestão, sempre que possível contribui com eventos de tecnologia,
+          disseminando conhecimento e ajudando na formação de novos profissionais. Já participou de
+          conferências como Go Digital, Fala Norte-Nordeste, RECnPlay, PHPEste, Roga DX e GDG,
+          compartilhando tendências do setor e preparando profissionais para os desafios do mercado
+          digital.
         </p>
-        <p>
-          Além da atuação técnica e de gestão, é palestrante em eventos de tecnologia, já tendo subido
-          ao palco de conferências como Go Digital, Fala Norte-Nordeste, RECnPlay, PHPEste, Roga DX, GDG,
-          entre outros. Compartilha conhecimento e tendências do setor, ajudando a preparar
-          profissionais prontos para os desafios do mercado digital.
-        </p>
+        </div>
       </div>
     </section>
 
     <section class="section" id="palestras">
       <h2>Palestras</h2>
-      <div class="palestras">
+      <p class="section-intro">Onde compartilha o que aprende liderando times.</p>
+      <div class="carousel">
+        <button class="carousel-btn prev" aria-label="Palestra anterior">&#8249;</button>
+        <div class="palestras carousel-track">
         <div class="card">
-          <img src="phpeste.jpg" alt="uiz Siqueira" />
-          <h3>Carreira dev: Como transformar Desafios em Grandes Conquistas</h3>
+          <img src="alemdocodigo.jpg" alt="Além do Código - Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          <h3>Além do Código: Liderando times de alta performance e entrega de valor na era da IA</h3>
           <p>
-            Nesta palestra, vou compartilhar minha jornada de desenvolvedor a
-            líder de equipes de alta performance, mostrando como transformar
-            desafios em oportunidades na carreira de programação. Com mais de 10
-            anos de experiência em engenharia de software, abordarei os passos
-            essenciais para evoluir na profissão, superar obstáculos e alcançar
-            grandes marcos, além de compartilhar lições práticas para quem
-            deseja trilhar um caminho de sucesso na área de tecnologia.
+            A inteligência artificial transformou a dinâmica da engenharia de software, deslocando o foco da simples implementação para a entrega estratégica de valor. O grande desafio da liderança hoje não é mais apenas garantir a entrega técnica, mas capacitar times para que pensem como o negócio e utilizem a tecnologia como alavanca de crescimento. Nesta palestra, Luiz discute como o papel do líder técnico se expande nesta nova era e como a IA pode ser a maior aliada do líder para acelerar resultados, otimizar o tempo e permitir que o talento humano se concentre no que realmente gera impacto.
           </p>
         </div>
         <div class="card">
-          <img src="produto.jpg" alt="Luiz Siqueira" />
+          <img src="phpeste.jpg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          <h3>Carreira dev: Como transformar Desafios em Grandes Conquistas</h3>
+          <p>
+            Luiz compartilha sua jornada de desenvolvedor a líder de equipes de alta performance, mostrando como transformar desafios em oportunidades na carreira de programação. Com mais de 10 anos de experiência em engenharia de software, aborda os passos essenciais para evoluir na profissão, superar obstáculos e alcançar grandes marcos, além de lições práticas para quem deseja trilhar um caminho de sucesso na área de tecnologia.
+          </p>
+        </div>
+        <div class="card">
+          <img src="produto.jpg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
           <h3>
             Criando Produtos de Impacto: A Sinergia entre Tecnologia, Design e
             Inovação
           </h3>
           <p>
-            Nesta palestra, exploramos como a integração estratégica entre
-            tecnologia, design e inovação pode transformar ideias em produtos
-            digitais de alto impacto. Abordo conceitos essenciais para criar
-            soluções escaláveis, centradas no usuário e alinhadas às
-            necessidades do mercado, mostrando como times multidisciplinares
-            podem potencializar a entrega de valor e acelerar a inovação.
+            Como a integração estratégica entre tecnologia, design e inovação pode transformar ideias em produtos digitais de alto impacto. Luiz aborda conceitos essenciais para criar soluções escaláveis, centradas no usuário e alinhadas às necessidades do mercado, mostrando como times multidisciplinares podem potencializar a entrega de valor e acelerar a inovação.
           </p>
         </div>
         <div class="card">
-          <img src="devsquevoam.jpg" alt="Devs que Voam - Luiz Siqueira" />
+          <img src="devsquevoam.jpg" alt="Devs que Voam - Luiz Siqueira" loading="lazy" width="1200" height="800" />
           <h3>Devs que Voam: A arte de construir equipes fora da curva</h3>
           <p>
             Nesta palestra, Moisés Falcão e Luiz Siqueira compartilham aprendizados práticos sobre
@@ -599,62 +1027,143 @@
           </p>
         </div>
         <div class="card">
-          <img src="godigital1.jpg" alt="Go Digital" />
+          <img src="godigital1.jpg" alt="Go Digital" loading="lazy" width="1200" height="800" />
           <h3>Dominando a tecnologia para sites de conteúdo</h3>
           <p>
-            Nesta palestra, vamos explorar como a tecnologia pode ser um
-            diferencial estratégico para alavancar a audiência de sites de
-            conteúdo, gerando resultados significativos. Abordaremos as melhores
-            práticas em soluções tecnológicas para otimizar o desenvolvimento e
-            a performance de sites, desde a escolha do CMS até o uso de
-            inteligência artificial para otimizar a entrega de conteúdo. Vamos
-            discutir também como tecnologias de front-end e back-end, aliadas a
-            práticas de indexação do Google, Core Web Vitals e técnicas de SEO,
-            podem potencializar o desempenho e a relevância nos mecanismos de
-            busca.
+            Como a tecnologia pode ser um diferencial estratégico para alavancar a audiência de sites de conteúdo. Luiz apresenta as melhores práticas para otimizar o desenvolvimento e a performance de sites — da escolha do CMS ao uso de inteligência artificial na entrega de conteúdo — e discute como front-end, back-end, indexação do Google, Core Web Vitals e SEO técnico potencializam o desempenho e a relevância nos mecanismos de busca.
           </p>
         </div>
         <div class="card">
-          <img src="falanorte.jpg" alt="Luiz Siqueira" />
+          <img src="falanorte.jpg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
           <h3>
             Inteligência Artificial em Ação: Como Automatizar Processos com
             Agentes de IA
           </h3>
           <p>
-            Descubra como agentes de IA podem transformar processos, aumentar a
-            eficiência e impulsionar a produtividade. Nesta palestra, apresento
-            exemplos práticos de automação inteligente, explico como integrar IA
-            em fluxos de trabalho e demonstro como essas soluções podem otimizar
-            desde tarefas operacionais até a tomada de decisão estratégica nas
-            empresas.
+            Como agentes de IA podem transformar processos, aumentar a eficiência e impulsionar a produtividade. Luiz apresenta exemplos práticos de automação inteligente, explica como integrar IA em fluxos de trabalho e demonstra como essas soluções otimizam desde tarefas operacionais até a tomada de decisão estratégica nas empresas.
           </p>
         </div>
         <div class="card">
-          <img src="lideranca.jpeg" alt="Luiz Siqueira" />
+          <img src="lideranca.jpeg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
           <h3>Segredo dos Devs de alta performance</h3>
           <p>
-            jornada de construção de um time de desenvolvimento de software de
-            alta performance. Através de uma abordagem focada na criação de uma
-            cultura sólida, implementação de processos eficientes e entrega
-            contínua de valor, apresentaremos as estratégias e práticas que
-            resultaram em grandes resultados. Esta palestra é ideal para líderes
-            e profissionais que buscam transformar suas equipes e alcançar novos
-            patamares.
+            A jornada de construção de um time de desenvolvimento de software de alta performance. Com foco em uma cultura sólida, processos eficientes e entrega contínua de valor, Luiz apresenta as estratégias e práticas que levaram a grandes resultados. Ideal para líderes e profissionais que buscam transformar suas equipes e alcançar novos patamares.
           </p>
+        </div>
+      </div>
+        <button class="carousel-btn next" aria-label="Próxima palestra">&#8250;</button>
+      </div>
+    </section>
+
+    <section class="section" id="slides">
+      <h2>Slides</h2>
+      <p class="section-intro">Material das palestras, para baixar e reaproveitar.</p>
+      <div class="slides-grid">
+        <a class="card slide-card" href="slides/alem-do-codigo.pdf" target="_blank" rel="noopener">
+          <img src="slides/alem-do-codigo-capa.jpg" alt="Capa dos slides: Além do Código" loading="lazy" width="1200" height="675" />
+          <h3>Além do Código: Liderando times de alta performance e entrega de valor na era da IA</h3>
+          <p class="slide-meta">2026 · 17 slides · PDF</p>
+          <span class="slide-cta">Abrir slides &rarr;</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <h2>Skills para agentes de IA</h2>
+      <p class="section-intro">
+        Fluxos de engenharia que uso com meus times, empacotados como skills do Claude Code —
+        públicos, neutros de empresa e prontos para adaptar ao seu contexto.
+        Código aberto em <a href="https://github.com/luizsiqueira-eng/skills" target="_blank" rel="noopener">github.com/luizsiqueira-eng/skills</a>.
+      </p>
+      <div class="skills-grid">
+        <div class="card skill-card">
+          <p class="skill-tag">Git flow · Code review · Release</p>
+          <h3>fluxo-de-entrega</h3>
+          <p>
+            Do card ao deploy: branch e commit com número do card e descrição em inglês
+            (1 branch = 1 commit), PR para <code>develop</code> só depois da validação humana,
+            acompanhamento do code review, release <code>develop &rarr; main</code> sem squash
+            com tag semver/rc, e hotfix a partir da <code>main</code> com PR dupla.
+          </p>
+          <div class="install">
+            <code id="install-fluxo">npx @luizsiqueira/skills add fluxo-de-entrega</code>
+            <button type="button" class="copy-btn" data-copy="install-fluxo" aria-label="Copiar comando">Copiar</button>
+          </div>
+          <a class="skill-link" href="https://github.com/luizsiqueira-eng/skills/blob/main/skills/fluxo-de-entrega/SKILL.md" target="_blank" rel="noopener">Ler a skill &rarr;</a>
         </div>
       </div>
     </section>
 
     <section class="section" id="feed">
-      <h2>Notícias & Artigos</h2>
-      <div class="feed">
+      <h2>Artigos</h2>
+      <div class="carousel">
+        <button class="carousel-btn prev" aria-label="Artigo anterior">&#8249;</button>
+        <div class="feed carousel-track">
+        <div class="card">
+          <a
+            href="https://ne10.uol.com.br/noticias/tecnologia/2023/04/15435246-programador-5-dicas-para-o-conquistar-o-primeiro-emprego.html"
+            target="_blank"
+          >
+            <img
+              src="artigos/artigo-3.jpg"
+              loading="lazy"
+              alt="Luiz Siqueira - Primeiro emprego na área de programação"
+            />
+            <h3>Programador: 5 dicas para o conquistar o primeiro emprego</h3>
+          </a>
+        </div>
+        <div class="card">
+          <a
+            href="https://ne10.uol.com.br/noticias/tecnologia/2023/08/15564213-tecnologias-de-sucesso-o-que-realmente-faz-um-projeto-brilhar.html"
+            target="_blank"
+          >
+            <img
+              src="artigos/artigo-8.jpg"
+              loading="lazy"
+              alt="Luiz Siqueira - Tecnologias de Sucesso: o que realmente faz um projeto brilhar?"
+            />
+            <h3>
+              Tecnologias de Sucesso: o que realmente faz um projeto brilhar?
+            </h3>
+          </a>
+        </div>
+        <div class="card">
+          <a
+            href="https://ne10.uol.com.br/noticias/tecnologia/2023/05/15462331-curso-de-programacao-em-6-meses-para-ganhar-rs-5-mil-nao-caia-em-conversa-fiada-saiba-como-fazer-carreira-e-ter-bom-salario.html"
+            target="_blank"
+          >
+            <img
+              src="artigos/artigo-7.jpg"
+              loading="lazy"
+              alt="Luiz Siqueira - Curso de programação em 6 meses para ganhar R$ 5 mil?"
+            />
+            <h3>
+              Curso de programação em 6 meses para ganhar R$ 5 mil? Não caia em
+              conversa fiada; saiba como fazer carreira e ter bom salário
+            </h3>
+          </a>
+        </div>
+        <div class="card">
+          <a
+            href="https://ne10.uol.com.br/noticias/tecnologia/2023/01/15166957-programador-como-comecar-a-programar-em-6-dicas-valiosas.html"
+            target="_blank"
+          >
+            <img
+              src="artigos/artigo-6.jpg"
+              loading="lazy"
+              alt="Luiz Siqueira - Como começar a programar em 6 dicas valiosas"
+            />
+            <h3>Programador: como COMEÇAR A PROGRAMAR em 6 DICAS VALIOSAS</h3>
+          </a>
+        </div>
         <div class="card">
           <a
             href="https://www.linkedin.com/pulse/sua-estrat%C3%A9gia-digital-pode-estar-falhando-por-motivos-luiz-siqueira-pzbef/"
             target="_blank"
           >
             <img
-              src="https://media.licdn.com/dms/image/v2/D4D12AQGJO66NIZW3kg/article-cover_image-shrink_720_1280/B4DZXzOyuTGkAI-/0/1743542496762?e=2147483647&v=beta&t=apwDy7uTtnG990LoeE3yBAKE8pFa5z94VWBxaS4vWro"
+              src="artigos/artigo-1.jpg"
+              loading="lazy"
               alt="Luiz Siqueira - Sua estratégia digital pode estar falhando por motivos que você não vê"
             />
             <h3>
@@ -665,11 +1174,25 @@
         </div>
         <div class="card">
           <a
+            href="https://www.linkedin.com/pulse/s%C3%B3-conte%C3%BAdo-n%C3%A3o-basta-o-seo-t%C3%A9cnico-faz-toda-luiz-siqueira-fercf"
+            target="_blank"
+          >
+            <img
+              src="artigos/artigo-5.jpg"
+              loading="lazy"
+              alt="Luiz Siqueira - Só Conteúdo Não Basta: O SEO Técnico Faz Toda a Diferença"
+            />
+            <h3>Só Conteúdo Não Basta: O SEO Técnico Faz Toda a Diferença</h3>
+          </a>
+        </div>
+        <div class="card">
+          <a
             href="https://www.linkedin.com/pulse/google-core-update-de-abril-2025-impacto-seu-e-luiz-siqueira-tgcjf/?trackingId=L93qIO%2BVRIqlt0%2BYAb%2B7cw%3D%3D"
             target="_blank"
           >
             <img
-              src="https://media.licdn.com/dms/image/v2/D4D12AQE9ikJrOeFdSQ/article-cover_image-shrink_720_1280/B4DZXVbROvHIAM-/0/1743042451241?e=2147483647&v=beta&t=z-3pYhawBHq7KbqOvip1OOtbEfQ3fzubSNf2QvA402c"
+              src="artigos/artigo-2.jpg"
+              loading="lazy"
               alt="Luiz Siqueira - Google Core Update de Abril de 2025: Impacto no seu Ranqueamento e
               Estratégias Essenciais"
             />
@@ -681,23 +1204,12 @@
         </div>
         <div class="card">
           <a
-            href="https://ne10.uol.com.br/noticias/tecnologia/2023/04/15435246-programador-5-dicas-para-o-conquistar-o-primeiro-emprego.html"
-            target="_blank"
-          >
-            <img
-              src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2022/03/16/806x444/1_datainfo_so_da_elas___divulgacao-20696119.jpg"
-              alt="Luiz Siqueira - Primeiro emprego na área de programação"
-            />
-            <h3>Programador: 5 dicas para o conquistar o primeiro emprego</h3>
-          </a>
-        </div>
-        <div class="card">
-          <a
             href="https://jc.uol.com.br/tecnologia/2024/05/07/o-fim-dos-cookies-de-terceiros-um-novo-cenario-para-a-publicidade-digital.html"
             target="_blank"
           >
             <img
-              src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2024/05/06/597x330/1_o_fim_dos_cookies_de_terceiros__um_novo_cenario_para_a_publicidade_digital-27033184.jpg?20250325122504"
+              src="artigos/artigo-4.jpg"
+              loading="lazy"
               alt="Luiz Siqueira - Fim dos cookies de terceiros"
             />
             <h3>
@@ -706,58 +1218,8 @@
             </h3>
           </a>
         </div>
-        <div class="card">
-          <a
-            href="https://www.linkedin.com/pulse/s%C3%B3-conte%C3%BAdo-n%C3%A3o-basta-o-seo-t%C3%A9cnico-faz-toda-luiz-siqueira-fercf"
-            target="_blank"
-          >
-            <img
-              src="https://media.licdn.com/dms/image/v2/D4D12AQEXk7l29bBXEg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1723653089339?e=2147483647&v=beta&t=bR3ZVou5ld9WmbaMY5QRHkPNR0ysbsGJhW63CP1BrEo"
-              alt="Luiz Siqueira - Só Conteúdo Não Basta: O SEO Técnico Faz Toda a Diferença"
-            />
-            <h3>Só Conteúdo Não Basta: O SEO Técnico Faz Toda a Diferença</h3>
-          </a>
-        </div>
-        <div class="card">
-          <a
-            href="https://ne10.uol.com.br/noticias/tecnologia/2023/01/15166957-programador-como-comecar-a-programar-em-6-dicas-valiosas.html"
-            target="_blank"
-          >
-            <img
-              src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2020/09/29/806x444/1_alunos_computador2-16672575.jpg"
-            />
-            <h3>Programador: como COMEÇAR A PROGRAMAR em 6 DICAS VALIOSAS</h3>
-          </a>
-        </div>
-        <div class="card">
-          <a
-            href="https://ne10.uol.com.br/noticias/tecnologia/2023/05/15462331-curso-de-programacao-em-6-meses-para-ganhar-rs-5-mil-nao-caia-em-conversa-fiada-saiba-como-fazer-carreira-e-ter-bom-salario.html"
-            target="_blank"
-          >
-            <img
-              src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2023/05/16/806x444/1_curso_de_programacao-22996172.jpg"
-              alt="Luiz Siqueira - Curso de programação em 6 meses para ganhar R$ 5 mil?"
-            />
-            <h3>
-              Curso de programação em 6 meses para ganhar R$ 5 mil? Não caia em
-              conversa fiada; saiba como fazer carreira e ter bom salário
-            </h3>
-          </a>
-        </div>
-        <div class="card">
-          <a
-            href="https://ne10.uol.com.br/noticias/tecnologia/2023/08/15564213-tecnologias-de-sucesso-o-que-realmente-faz-um-projeto-brilhar.html"
-            target="_blank"
-          >
-            <img
-              src="https://imagens.ne10.uol.com.br/veiculos/_midias/jpg/2023/08/09/806x444/1_tecnologias_de_sucesso_o_que_realmente_faz_um_projeto_brilhar_prancheta_1-23819860.jpg"
-              alt="Luiz Siqueira - Tecnologias de Sucesso: o que realmente faz um projeto brilhar?"
-            />
-            <h3>
-              Tecnologias de Sucesso: o que realmente faz um projeto brilhar?
-            </h3>
-          </a>
-        </div>
+      </div>
+        <button class="carousel-btn next" aria-label="Próximo artigo">&#8250;</button>
       </div>
     </section>
 
@@ -774,17 +1236,47 @@
     <button id="back-to-top" title="Voltar ao topo">&#8679;</button>
 
     <footer>
-      <div class="footer-links">
-        <a href="https://www.linkedin.com/in/luizs" target="_blank">LinkedIn</a>
-        <a href="https://www.instagram.com/luizsiqueira.s" target="_blank">Instagram</a>
-        <a href="https://papodedev.com.br" target="_blank">Papo de Dev</a>
-        <a href="https://instagram.com/luizsiqueira.s?dm" target="_blank">Entre em contato</a>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <p class="footer-logo"><svg class="logo" width="30" height="30" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6l6 6-6 6" stroke="currentColor"/><path d="M13 6l6 6-6 6" stroke="var(--accent)"/></svg>Luiz Siqueira</p>
+          <p class="footer-tagline">Líder de Engenharia de Software</p>
+        </div>
+        <nav class="footer-nav" aria-label="Rodapé">
+          <a href="#sobre">Sobre</a>
+          <a href="#palestras">Palestras</a>
+          <a href="#slides">Slides</a>
+          <a href="#skills">Skills</a>
+          <a href="#feed">Artigos</a>
+        </nav>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/luizsiqueira.s" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/luizs" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="https://papodedev.com.br" target="_blank" rel="noopener" aria-label="Papo de Dev">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </a>
+        </div>
       </div>
-      <p class="footer-copy">&copy; 2025 Luiz Siqueira. Todos os direitos reservados.</p>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Luiz Siqueira. Todos os direitos reservados.</p>
+      </div>
     </footer>
     <script>
-      document.querySelector(".menu-toggle").addEventListener("click", function () {
-        document.querySelector("nav").classList.toggle("active");
+      const menuToggle = document.querySelector(".menu-toggle");
+      const menu = document.querySelector("header nav");
+      menuToggle.addEventListener("click", function () {
+        const open = menu.classList.toggle("active");
+        menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        menuToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+      });
+      menu.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          menu.classList.remove("active");
+          menuToggle.setAttribute("aria-expanded", "false");
+        });
       });
 
       const backToTop = document.getElementById("back-to-top");
@@ -802,8 +1294,49 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
 
+      document.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const text = document.getElementById(btn.dataset.copy).textContent;
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = "Copiado!";
+            setTimeout(function () { btn.textContent = "Copiar"; }, 1800);
+          });
+        });
+      });
+
+      document.querySelectorAll(".palestras .card").forEach(function (card) {
+        const btn = document.createElement("button");
+        btn.className = "read-more";
+        btn.type = "button";
+        btn.textContent = "Ler mais";
+        btn.addEventListener("click", function () {
+          const open = card.classList.toggle("expanded");
+          btn.textContent = open ? "Ler menos" : "Ler mais";
+        });
+        card.appendChild(btn);
+      });
+
+      document.querySelectorAll(".carousel").forEach(function (carousel) {
+        const track = carousel.querySelector(".carousel-track");
+        const prevBtn = carousel.querySelector(".carousel-btn.prev");
+        const nextBtn = carousel.querySelector(".carousel-btn.next");
+        function cardStep() {
+          const card = track.querySelector(".card");
+          return card ? card.getBoundingClientRect().width + 32 : track.clientWidth;
+        }
+        function updateButtons() {
+          prevBtn.disabled = track.scrollLeft <= 4;
+          nextBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+        }
+        prevBtn.addEventListener("click", function () { track.scrollBy({ left: -cardStep(), behavior: "smooth" }); });
+        nextBtn.addEventListener("click", function () { track.scrollBy({ left: cardStep(), behavior: "smooth" }); });
+        track.addEventListener("scroll", updateButtons);
+        window.addEventListener("resize", updateButtons);
+        updateButtons();
+      });
+
       const sections = document.querySelectorAll("section[id]");
-      const navLinks = document.querySelectorAll("nav a");
+      const navLinks = document.querySelectorAll("header nav a");
       const observer = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {

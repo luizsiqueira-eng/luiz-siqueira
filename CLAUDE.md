@@ -32,7 +32,7 @@ Single-page site with anchor-based navigation (`#sobre`, `#palestras`, `#feed`):
 ## Key design decisions
 
 - All critical styles live **inline in `index.html`**, not in `styles.css`. `styles.css` contains legacy/unused rules for a previous layout (`.bio`, `.noticia`, `.palestra`, `.redes-sociais`).
-- The hero section uses a background video (`luiz.mov`) rendered via `<video autoplay muted playsinline loop>`.
+- The hero section uses a background video (`luiz.mp4`, 720p H.264 sem áudio) rendered via `<video autoplay muted playsinline loop>`.
 - Contact CTA links directly to Instagram DM instead of a form (the form section is commented out in `index.html`).
 - JSON-LD blocks in `<head>` cover `Person`, `VideoObject`, and two `ItemList` schemas (palestras and artigos) for rich search results.
 - The mobile nav toggle is driven by a single inline `<script>` at the bottom of `<body>` that toggles `.active` on `<nav>`.
