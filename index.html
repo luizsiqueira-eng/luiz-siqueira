@@ -170,13 +170,33 @@
       .hero video {
         object-position: 50% 30%;
       }
+      /* Mobile: vídeo inteiro (16:9) no topo, texto abaixo — sem recorte */
       @media (max-width: 768px) {
         .hero {
-          height: 64vh;
-          min-height: 460px;
+          height: auto;
+          display: block;
+          background: var(--navy);
+          padding-bottom: 2.5rem;
         }
         .hero video {
-          object-position: 55% 20%;
+          position: static;
+          display: block;
+          width: 100%;
+          height: auto;
+          aspect-ratio: 16 / 9;
+          object-fit: cover;
+          object-position: center;
+        }
+        .hero::after {
+          display: none;
+        }
+        .hero h1 {
+          margin-top: 1.8rem;
+          text-shadow: none;
+        }
+        .hero p {
+          text-shadow: none;
+          color: rgba(255, 255, 255, 0.8);
         }
       }
       .hero h1,
