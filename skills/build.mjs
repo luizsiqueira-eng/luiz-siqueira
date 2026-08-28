@@ -241,11 +241,8 @@ for (const s of skills) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#0b0e14" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-700.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-400.woff2" crossorigin />
     ${head}
     <style>
       .doc-hero { background: var(--navy); color: #fff; padding: 3.2rem 0 2.6rem; }
