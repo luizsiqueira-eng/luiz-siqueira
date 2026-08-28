@@ -1,0 +1,27 @@
+# Luiz Siqueira — Skills para agentes de IA
+
+> Skills públicas (código aberto, MIT) para Claude Code e outros agentes de IA: fluxos de engenharia prontos, neutros de empresa, instaláveis com um comando.
+
+Site: https://luizsiqueira.com.br
+Catálogo: https://luizsiqueira.com.br/skills/
+Catálogo em JSON: https://luizsiqueira.com.br/skills/skills.json
+Pacote npm: https://www.npmjs.com/package/@luizsiqueira/skills
+Repositório: https://github.com/luizsiqueira-eng/skills
+Instalar: npx @luizsiqueira/skills add <skill>
+
+## Skills
+- [Second Brain](https://github.com/luizsiqueira-eng/skills/blob/main/skills/second-brain/SKILL.md): Seu segundo cérebro no Obsidian: registra o que você aprende no dia a dia e consulta antes de investigar ou decidir. Comando: npx @luizsiqueira/skills add second-brain. Tags: obsidian, segundo-cerebro, conhecimento, decisoes.
+- [Board Workflow](https://github.com/luizsiqueira-eng/skills/blob/main/skills/board-workflow/SKILL.md): Cria, move e consulta cards no Jira ou Trello seguindo o fluxo do seu time. Comando: npx @luizsiqueira/skills add board-workflow. Tags: jira, trello, workflow, board, qualidade.
+- [Web Security Review](https://github.com/luizsiqueira-eng/skills/blob/main/skills/security-review/SKILL.md): Aponta e corrige vulnerabilidades em projetos web e apps com IA. Comando: npx @luizsiqueira/skills add security-review. Tags: web, seguranca, owasp, llm.
+- [Git Flow Delivery](https://github.com/luizsiqueira-eng/skills/blob/main/skills/git-flow-delivery/SKILL.md): Branch, commit, PR, release e hotfix seguindo o Git Flow. Comando: npx @luizsiqueira/skills add git-flow-delivery. Tags: git-flow, code-review, release, hotfix, jira.
+
+## Conteúdo bruto (markdown)
+- https://raw.githubusercontent.com/luizsiqueira-eng/skills/main/skills/second-brain/SKILL.md
+- https://raw.githubusercontent.com/luizsiqueira-eng/skills/main/skills/board-workflow/SKILL.md
+- https://raw.githubusercontent.com/luizsiqueira-eng/skills/main/skills/security-review/SKILL.md
+- https://raw.githubusercontent.com/luizsiqueira-eng/skills/main/skills/git-flow-delivery/SKILL.md
+- README: https://raw.githubusercontent.com/luizsiqueira-eng/skills/main/README.md
+
+## Sobre o autor
+- Luiz Siqueira, Líder de Engenharia de Software. Palestrante sobre liderança de engenharia, times de alta performance e IA.
+- https://luizsiqueira.com.br/#sobre
