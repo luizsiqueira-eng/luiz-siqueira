@@ -2,6 +2,14 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJZ3DD90KN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZJZ3DD90KN');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Skills para agentes de IA | Luiz Siqueira</title>
     <meta name="description" content="Skills públicas para Claude Code: Git Flow, quadro do time (Jira/Trello), segurança web e segundo cérebro no Obsidian. Instale com um comando." />
@@ -546,6 +554,17 @@
     </footer>
 
     <script>
+      // Eventos GA4
+      document.addEventListener("click", function (e) {
+        const a = e.target.closest("a, button");
+        if (!a || typeof gtag !== "function") return;
+        const href = a.getAttribute("href") || "";
+        if (a.classList.contains("copy")) gtag("event", "copy_install", { skill: (a.dataset.cmd || "").split(" add ")[1] || "" });
+        else if (/github\.com/.test(href)) gtag("event", "click_github", { target: href });
+        else if (/npmjs\.com/.test(href)) gtag("event", "click_npm");
+      });
+      document.getElementById("q").addEventListener("change", function () { if (this.value && typeof gtag === "function") gtag("event", "search_skill", { term: this.value }); });
+
       // Menu mobile
       const menuToggle = document.querySelector(".menu-toggle");
       const menu = document.querySelector("header nav");

@@ -3,6 +3,14 @@
   <head>
     <!-- Meta Tags Essenciais -->
     <meta charset="UTF-8" />
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJZ3DD90KN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZJZ3DD90KN');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
@@ -1334,6 +1342,20 @@
       </div>
     </footer>
     <script>
+      // Eventos GA4: o que as pessoas fazem além de visitar
+      document.addEventListener("click", function (e) {
+        const a = e.target.closest("a, button");
+        if (!a || typeof gtag !== "function") return;
+        const href = a.getAttribute("href") || "";
+        if (/instagram\.com/.test(href)) gtag("event", "click_instagram", { location: a.closest("section, footer, header")?.id || a.closest("footer") ? "footer" : "hero" });
+        else if (/linkedin\.com/.test(href)) gtag("event", "click_linkedin");
+        else if (/papodedev/.test(href)) gtag("event", "click_papodedev");
+        else if (/\.pdf$/.test(href)) gtag("event", "open_slides", { file: href });
+        else if (href === "/skills/") gtag("event", "go_to_skills");
+        else if (a.classList.contains("copy-btn")) gtag("event", "copy_install", { skill: (a.dataset.copy || "").replace("install-", "") });
+        else if (a.classList.contains("read-more")) gtag("event", "read_more_talk");
+      });
+
       const menuToggle = document.querySelector(".menu-toggle");
       const menu = document.querySelector("header nav");
       menuToggle.addEventListener("click", function () {
