@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Google Analytics (GA4) -->
+    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-ZJZ3DD90KN');window.addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-ZJZ3DD90KN';document.head.appendChild(s);});</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Security Review — skill para Claude Code | Luiz Siqueira</title>
+    <meta name="description" content="Aponta e corrige vulnerabilidades em projetos web e apps com IA. Instale com npx @luizsiqueira/skills add security-review. Skill gratuita (MIT) para Claude Code e agentes de IA." />
+    <link rel="canonical" href="https://luizsiqueira.com.br/skills/security-review/" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="author" content="Luiz Siqueira" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Web Security Review — skill para Claude Code" />
+    <meta property="og:description" content="Aponta e corrige vulnerabilidades em projetos web e apps com IA." />
+    <meta property="og:url" content="https://luizsiqueira.com.br/skills/security-review/" />
+    <meta property="og:image" content="https://luizsiqueira.com.br/og-skills-v2.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Luiz Siqueira" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://luizsiqueira.com.br/og-skills-v2.jpg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0b0e14" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
+    <style>
+      :root {
+        --navy: #0b0e14;
+        --accent: #2f6bff;
+        --accent-hover: #1f56e0;
+        --bg: #f5f7fa;
+        --surface: #ffffff;
+        --text: #1f2937;
+        --heading: #0b0e14;
+        --muted: #6b7280;
+        --line: #e6e8ee;
+        --footer-link: #a3adc2;
+        --footer-copy: #6b7591;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: 'Inter', Arial, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.6;
+      }
+      a { color: inherit; text-decoration: none; }
+      a:hover { color: var(--accent); }
+      h1, h2, h3, p { margin: 0; }
+      code { font-family: var(--mono); }
+
+      /* Header (igual ao site) */
+      header {
+        background: var(--navy);
+        height: 72px;
+        padding: 0 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+      #marca {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #fff;
+      }
+      #marca:hover { color: #fff; }
+      header nav { display: flex; gap: 2rem; }
+      header nav a {
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.85;
+      }
+      header nav a:hover, header nav a.active { opacity: 1; color: var(--accent); }
+      .menu-toggle {
+        display: none;
+        font-size: 2rem;
+        line-height: 1;
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        padding: 0 0.25rem;
+      }
+      @media (max-width: 768px) {
+        .menu-toggle { display: block; }
+        header nav {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 72px;
+          left: 0;
+          width: 100%;
+          background: var(--navy);
+          padding: 0.5rem 0 1rem;
+          gap: 0;
+        }
+        header nav.active { display: flex; }
+        header nav a { text-align: center; padding: 0.9rem; }
+      }
+
+      .wrap { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+      section[id] { scroll-margin-top: 72px; }
+
+      /* Hero */
+      .hero {
+        background: var(--navy);
+        color: #fff;
+        padding: 4.5rem 0 3.5rem;
+      }
+      .hero-inner > * { max-width: 760px; }
+      .howto {
+        margin: 1.4rem 0 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: passo;
+        display: grid;
+        gap: 0.7rem;
+      }
+      .howto li {
+        counter-increment: passo;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.9rem;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 1rem;
+      }
+      .howto li::before {
+        content: counter(passo);
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.05rem;
+      }
+      .howto li span { line-height: 1.55; padding-top: 0.15rem; }
+      .howto strong { color: #fff; }
+      .howto em { font-style: normal; color: #9db8ff; font-weight: 600; }
+      .hero-note { margin-top: 0.9rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); }
+      .hero-note code { background: rgba(255,255,255,0.08); padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.9em; }
+      .hero-note a { color: rgba(255,255,255,0.85); border-bottom: 1px solid rgba(255,255,255,0.3); }
+      .hero-note a:hover { color: #fff; }
+      .eyebrow {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.9rem;
+      }
+      .hero h1 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        text-wrap: balance;
+      }
+      .hero p.lead {
+        margin-top: 1.1rem;
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.78);
+        max-width: 56ch;
+      }
+      .hero-links { display: flex; gap: 1.4rem; margin-top: 1.4rem; font-size: 0.9rem; }
+      .hero-links a { color: rgba(255,255,255,0.85); border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 2px; }
+      .hero-links a:hover { color: #fff; border-color: #fff; }
+
+      .terminal {
+        background: #05070b;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        font-family: var(--mono);
+        font-size: 0.9rem;
+      }
+      .terminal-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0.6rem 0.9rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .terminal-bar span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.18); display: block; }
+      .terminal-bar em { margin-left: auto; font-style: normal; font-size: 0.72rem; color: rgba(255,255,255,0.45); font-family: 'Inter', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; }
+      .terminal pre { margin: 0; padding: 1rem 1.1rem; color: #d7dce5; line-height: 1.7; overflow-x: auto; }
+      .terminal .c { color: #6b7591; }
+      .terminal .p { color: var(--accent); }
+      .terminal .ok { color: #3fbf7f; }
+
+      .badge {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        background: rgba(47, 107, 255, 0.14); color: #9db8ff;
+        border: 1px solid rgba(47, 107, 255, 0.35); border-radius: 999px;
+        padding: 0.35rem 0.85rem; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.2rem;
+      }
+      .badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #3fbf7f; }
+      .hero-actions { display: flex; gap: 0.8rem; margin-top: 1.6rem; flex-wrap: wrap; }
+      .btn-primary { background: var(--accent); color: #fff; }
+      .btn-primary:hover { background: var(--accent-hover); color: #fff; }
+      .btn-ghost { color: #fff; border: 1px solid rgba(255, 255, 255, 0.35); }
+      .btn-ghost:hover { border-color: #fff; color: #fff; }
+
+      /* Destaque */
+      .featured { padding: 3.5rem 0 0; }
+      .sec-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.2rem; }
+      .sec-head h2 { font-size: 1.35rem; font-weight: 700; color: var(--heading); }
+      .sec-head a { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
+      .feat-card {
+        min-width: 0;
+        background: var(--navy); color: #fff; border-radius: 14px; padding: 2rem;
+        display: flex; flex-direction: column; gap: 1rem;
+      }
+      .feat-card .skill-tags span.featured-tag { background: rgba(63, 191, 127, 0.15); color: #6fd39d; }
+      .feat-card .skill-tags span { color: #9db8ff; background: rgba(47, 107, 255, 0.16); }
+      .feat-card h3 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; }
+      .feat-card .name { font-family: var(--mono); color: #9db8ff; font-size: 0.95rem; margin-top: -0.6rem; }
+      .feat-card .desc { color: rgba(255, 255, 255, 0.8); max-width: 75ch; }
+      .cmd {
+        display: flex; align-items: center; gap: 0.8rem;
+        background: #05070b; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+        padding: 0.9rem 1.1rem; font-family: var(--mono); font-size: 0.95rem; color: #9db8ff;
+      }
+      .cmd code { flex: 1; min-width: 0; white-space: nowrap; overflow-x: auto; }
+      .feat-actions { display: flex; gap: 0.7rem; align-items: center; flex-wrap: wrap; }
+      .copy.ghost { background: rgba(255,255,255,0.1); }
+      .copy.ghost:hover { background: rgba(255,255,255,0.18); }
+
+      /* Números */
+      .stats { padding: 3rem 0 0; }
+      .stats .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+      .stat {
+        background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+        padding: 1.4rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
+      }
+      .stat p { font-size: 0.85rem; color: var(--muted); }
+      .stat strong { display: block; font-size: 2rem; font-weight: 700; color: var(--heading); letter-spacing: -0.02em; line-height: 1.1; margin-top: 0.2rem; }
+      .stat small { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+      .stat .ic { width: 44px; height: 44px; border-radius: 10px; background: rgba(47,107,255,0.1); color: var(--accent); display: flex; align-items: center; justify-content: center; }
+
+      /* Quick start */
+      .quick { padding: 3rem 0 4rem; }
+      .quick-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 2rem; }
+      .quick-card h2 { font-size: 1.35rem; color: var(--heading); margin-bottom: 0.3rem; }
+      .quick-card p { color: var(--muted); margin-bottom: 1rem; }
+      .quick-card .note { font-size: 0.85rem; margin: 0.9rem 0 0; }
+      .quick-card .note code { background: var(--bg); padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.9em; }
+
+      .skill .cat {
+        margin-left: auto; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+        color: var(--muted); background: var(--bg); border-radius: 4px; padding: 0.25rem 0.5rem;
+      }
+      .skill .top { display: flex; align-items: flex-start; gap: 0.6rem; }
+      .skill .desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+      /* Como funciona */
+      .how { padding: 3.5rem 0 1rem; }
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.5rem;
+      }
+      .step {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 1.4rem 1.5rem;
+      }
+      .step .n {
+        width: 30px; height: 30px; border-radius: 50%;
+        background: var(--navy); color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 0.85rem; margin-bottom: 0.9rem;
+      }
+      .step h3 { font-size: 1rem; color: var(--heading); margin-bottom: 0.4rem; }
+      .step p { font-size: 0.95rem; color: var(--muted); }
+      .step code { font-size: 0.85em; background: var(--bg); padding: 0.1em 0.4em; border-radius: 4px; }
+
+      /* Catálogo */
+      .catalog { padding: 3.5rem 0 5rem; }
+      .catalog-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+      }
+      .catalog-head h2 { font-size: 1.8rem; font-weight: 700; color: var(--heading); }
+      .catalog-head h2::after {
+        content: ''; display: block; width: 48px; height: 4px;
+        background: var(--accent); border-radius: 2px; margin-top: 0.4rem;
+      }
+      .count { color: var(--muted); font-size: 0.95rem; }
+      .toolbar {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 1.8rem;
+      }
+      .search {
+        flex: 1 1 280px;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0 0.9rem;
+        height: 46px;
+      }
+      .search input {
+        flex: 1; border: none; outline: none; font: inherit; font-size: 0.95rem;
+        background: transparent; color: var(--text); min-width: 0;
+      }
+      .search svg { color: var(--muted); flex-shrink: 0; }
+      .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+      .tag {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text);
+        border-radius: 999px;
+        padding: 0.45rem 0.9rem;
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s, border-color 0.15s;
+      }
+      .tag:hover { border-color: var(--accent); color: var(--accent); }
+      .tag.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 1.6rem;
+      }
+      .skill {
+        min-width: 0;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .skill:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(11, 14, 20, 0.08); }
+      .skill-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+      .skill-tags span {
+        font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--accent); background: rgba(47, 107, 255, 0.08); border-radius: 4px; padding: 0.25rem 0.5rem;
+      }
+      .skill h3 { font-size: 1.15rem; line-height: 1.35; color: var(--heading); font-weight: 700; }
+      .skill .slug { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); margin-top: -0.4rem; }
+      .skill .desc { font-size: 0.95rem; color: var(--text); }
+      .skill .meta { font-size: 0.8rem; color: var(--muted); }
+      .install {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: var(--navy);
+        color: #fff;
+        border-radius: 8px;
+        padding: 0.65rem 0.6rem 0.65rem 0.9rem;
+      }
+      .install code { flex: 1; min-width: 0; font-size: 0.82rem; white-space: nowrap; overflow-x: auto; }
+      .copy {
+        flex-shrink: 0;
+        display: flex; align-items: center; gap: 0.35rem;
+        background: var(--accent); color: #fff; border: none; border-radius: 5px;
+        padding: 0.45rem 0.7rem; font: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+        transition: background 0.15s;
+      }
+      .copy:hover { background: var(--accent-hover); }
+      .copy.done { background: #2f9e6b; }
+      .skill-links { display: flex; gap: 1.2rem; font-size: 0.88rem; font-weight: 600; }
+      .skill-links a { color: var(--accent); }
+      .skill-links a:hover { text-decoration: underline; }
+      .empty { color: var(--muted); padding: 3rem 0; text-align: center; grid-column: 1 / -1; }
+
+      /* FAQ */
+      .faq { padding: 0 0 3.5rem; }
+      .faq h2 { font-size: 1.8rem; font-weight: 700; color: var(--heading); margin-bottom: 1.2rem; }
+      .faq h2::after { content: ''; display: block; width: 48px; height: 4px; background: var(--accent); border-radius: 2px; margin-top: 0.4rem; }
+      .faq-list { display: grid; gap: 0.6rem; max-width: 820px; }
+      .faq-item { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0.2rem 1.2rem; }
+      .faq-item summary { cursor: pointer; font-weight: 600; color: var(--heading); padding: 0.9rem 0; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+      .faq-item summary::-webkit-details-marker { display: none; }
+      .faq-item summary::after { content: '+'; color: var(--accent); font-size: 1.4rem; line-height: 1; flex-shrink: 0; }
+      .faq-item[open] summary::after { content: '−'; }
+      .faq-item p { margin: 0 0 1rem; color: var(--text); font-size: 0.95rem; }
+
+      /* Contribuir */
+      .contrib {
+        background: var(--surface);
+        border-top: 1px solid var(--line);
+        padding: 3.5rem 0;
+      }
+      .contrib .wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; align-items: center; }
+      .contrib h2 { font-size: 1.4rem; color: var(--heading); margin-bottom: 0.4rem; }
+      .contrib p { color: var(--muted); max-width: 60ch; }
+      .btn {
+        display: inline-block; padding: 0.75rem 1.4rem; border-radius: 6px;
+        font-weight: 600; font-size: 0.95rem; white-space: nowrap;
+      }
+      .btn-dark { background: var(--navy); color: #fff; }
+      .btn-dark:hover { background: var(--accent); color: #fff; }
+
+      /* Footer (igual ao site) */
+      footer { background: var(--navy); color: #fff; }
+      .footer-inner {
+        max-width: 1200px; margin: 0 auto; padding: 3rem 2rem;
+        display: grid; grid-template-columns: 1fr auto auto; gap: 3rem; align-items: center;
+      }
+      .footer-logo { display: flex; align-items: center; gap: 0.7rem; margin: 0 0 0.4rem; font-size: 1rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+      .footer-tagline { color: var(--footer-link); font-size: 0.9rem; }
+      .footer-nav { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; }
+      .footer-nav a { color: var(--footer-link); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+      .footer-nav a:hover { color: #fff; }
+      .footer-social { display: flex; gap: 0.6rem; }
+      .footer-social a {
+        width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+        border: 1px solid rgba(255,255,255,0.18); border-radius: 50%; color: #fff;
+      }
+      .footer-social a:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+      .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); }
+      .footer-copy { max-width: 1200px; margin: 0 auto; padding: 1.2rem 2rem; color: var(--footer-copy); font-size: 0.85rem; }
+
+      @media (max-width: 900px) {
+
+        .steps { grid-template-columns: 1fr; }
+        .contrib .wrap { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 768px) {
+        .wrap { padding: 0 1.25rem; }
+        .hero { padding: 3rem 0 2.5rem; }
+        .hero h1 { font-size: 2rem; }
+        .grid { grid-template-columns: 1fr; }
+        .footer-inner { grid-template-columns: 1fr; gap: 1.8rem; text-align: center; padding: 2.5rem 1.5rem; }
+        .footer-logo, .footer-nav, .footer-social { justify-content: center; }
+        .footer-nav { gap: 0.8rem 1.4rem; }
+        .footer-copy { text-align: center; }
+      }
+    </style>
+    <style>
+      .doc-hero { background: var(--navy); color: #fff; padding: 3.2rem 0 2.6rem; }
+      .crumbs { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem; }
+      .crumbs a { color: rgba(255,255,255,0.8); } .crumbs a:hover { color: #fff; }
+      .doc-hero h1 { font-size: 2.3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.5rem; }
+      .doc-hero .slug { font-family: var(--mono); color: #9db8ff; font-size: 0.95rem; }
+      .doc-hero .lead { margin-top: 0.9rem; color: rgba(255,255,255,0.78); font-size: 1.1rem; max-width: 60ch; }
+      .doc-hero .cmd { margin-top: 1.4rem; max-width: 720px; }
+      .doc-meta { display: flex; gap: 1.4rem; flex-wrap: wrap; margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+      .doc-meta a { color: rgba(255,255,255,0.85); border-bottom: 1px solid rgba(255,255,255,0.3); }
+      .doc { padding: 3rem 0 4rem; }
+      .doc .md { max-width: 820px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 2rem 2.4rem; }
+      .md h2 { font-size: 1.45rem; margin: 2rem 0 0.8rem; color: var(--heading); padding-top: 1.2rem; border-top: 1px solid var(--line); }
+      .md h2:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+      .md h3 { font-size: 1.1rem; margin: 1.5rem 0 0.6rem; color: var(--heading); }
+      .md p, .md li { line-height: 1.7; } .md ul, .md ol { padding-left: 1.4rem; } .md li { margin: 0.3rem 0; }
+      .md code { font-family: var(--mono); font-size: 0.88em; background: var(--bg); padding: 0.1em 0.4em; border-radius: 4px; }
+      .md pre { background: var(--navy); color: #d7dce5; border-radius: 8px; padding: 1rem 1.1rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.6; }
+      .md pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+      .md table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.92rem; display: block; overflow-x: auto; }
+      .md th, .md td { border: 1px solid var(--line); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+      .md th { background: var(--bg); font-weight: 600; }
+      .md blockquote { margin: 1rem 0; padding: 0.6rem 1rem; border-left: 3px solid var(--accent); background: var(--bg); color: var(--text); }
+      .md a { color: var(--accent); } .md a:hover { text-decoration: underline; }
+      .md input[type=checkbox] { margin-right: 0.4rem; }
+      .doc-nav { margin-top: 2rem; display: flex; gap: 1.4rem; flex-wrap: wrap; font-size: 0.95rem; font-weight: 600; }
+      .doc-nav a { color: var(--accent); }
+      @media (max-width: 768px) { .doc-hero h1 { font-size: 1.7rem; } .doc .md { padding: 1.4rem 1.2rem; } }
+    </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://luizsiqueira.com.br/skills/security-review/",
+      "headline": "Web Security Review",
+      "description": "Aponta e corrige vulnerabilidades em projetos web e apps com IA.",
+      "inLanguage": "pt-BR",
+      "url": "https://luizsiqueira.com.br/skills/security-review/",
+      "datePublished": "2026-08-27",
+      "dateModified": "2026-08-28",
+      "author": {
+        "@type": "Person",
+        "name": "Luiz Siqueira",
+        "url": "https://luizsiqueira.com.br",
+        "sameAs": [
+          "https://github.com/luizsiqueira-eng",
+          "https://www.npmjs.com/package/@luizsiqueira/skills",
+          "https://www.linkedin.com/in/luizs",
+          "https://www.instagram.com/luizsiqueira.s"
+        ]
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Luiz Siqueira",
+        "url": "https://luizsiqueira.com.br",
+        "sameAs": [
+          "https://github.com/luizsiqueira-eng",
+          "https://www.npmjs.com/package/@luizsiqueira/skills",
+          "https://www.linkedin.com/in/luizs",
+          "https://www.instagram.com/luizsiqueira.s"
+        ]
+      },
+      "keywords": "web, seguranca, owasp, llm",
+      "isPartOf": {
+        "@id": "https://luizsiqueira.com.br/skills/"
+      },
+      "about": {
+        "@id": "https://luizsiqueira.com.br/skills/#security-review"
+      },
+      "image": "https://luizsiqueira.com.br/og-skills-v2.jpg"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://luizsiqueira.com.br/skills/#security-review",
+      "name": "Web Security Review",
+      "alternateName": "security-review",
+      "description": "Aponta e corrige vulnerabilidades em projetos web e apps com IA.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "macOS, Linux, Windows",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      },
+      "license": "https://opensource.org/licenses/MIT",
+      "installUrl": "https://www.npmjs.com/package/@luizsiqueira/skills",
+      "codeRepository": "https://github.com/luizsiqueira-eng/skills",
+      "url": "https://luizsiqueira.com.br/skills/security-review/",
+      "sameAs": "https://github.com/luizsiqueira-eng/skills/blob/main/skills/security-review/SKILL.md",
+      "datePublished": "2026-08-27",
+      "author": {
+        "@type": "Person",
+        "name": "Luiz Siqueira",
+        "url": "https://luizsiqueira.com.br",
+        "sameAs": [
+          "https://github.com/luizsiqueira-eng",
+          "https://www.npmjs.com/package/@luizsiqueira/skills",
+          "https://www.linkedin.com/in/luizs",
+          "https://www.instagram.com/luizsiqueira.s"
+        ]
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Luiz Siqueira",
+          "item": "https://luizsiqueira.com.br/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Skills",
+          "item": "https://luizsiqueira.com.br/skills/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Web Security Review",
+          "item": "https://luizsiqueira.com.br/skills/security-review/"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+  </head>
+  <body>
+    <header>
+      <a id="marca" href="/">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6l6 6-6 6" stroke="currentColor"/><path d="M13 6l6 6-6 6" stroke="var(--accent)"/></svg>
+        Luiz Siqueira
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">&#9776;</button>
+      <nav id="menu">
+        <a href="/#sobre">Sobre</a>
+        <a href="/#palestras">Palestras</a>
+        <a href="/#slides">Slides</a>
+        <a href="/skills/" class="active">Skills</a>
+        <a href="/#feed">Artigos</a>
+      </nav>
+    </header>
+
+    <section class="doc-hero">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Você está em"><a href="/">Luiz Siqueira</a> › <a href="/skills/">Skills</a> › Web Security Review</nav>
+        <h1>Web Security Review</h1>
+        <p class="slug">security-review · Segurança</p>
+        <p class="lead">Aponta e corrige vulnerabilidades em projetos web e apps com IA.</p>
+        <div class="cmd"><code>npx @luizsiqueira/skills add security-review</code><button type="button" class="copy ghost" data-cmd="npx @luizsiqueira/skills add security-review" aria-label="Copiar comando">Copiar</button></div>
+        <div class="doc-meta">
+          <span>Gratuita · MIT</span>
+          <a href="https://github.com/luizsiqueira-eng/skills/blob/main/skills/security-review/SKILL.md" target="_blank" rel="noopener">Ver no GitHub</a>
+          <a href="https://www.npmjs.com/package/@luizsiqueira/skills" target="_blank" rel="noopener">npm</a>
+          <span>Publicada em 2026-08-27</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc">
+      <div class="wrap">
+        <article class="md">
+<div class="markdown-heading"><a id="user-content-security-review--validar-apontar-e-corrigir" class="anchor" aria-label="Permalink: Security Review — validar, apontar e corrigir" href="#security-review--validar-apontar-e-corrigir"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Premissa: <strong>código gerado por IA é código não confiável até passar por validação, testes e
+revisão de segurança.</strong> Isso vale para o código que você está revisando e para o que você mesmo
+acabou de escrever.</p>
+<table>
+<thead>
+<tr>
+<th>Modo</th>
+<th>Quando</th>
+<th>Escopo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Auditoria</strong></td>
+<td>"revisa a segurança do projeto"</td>
+<td>o repositório inteiro</td>
+</tr>
+<tr>
+<td><strong>Revisão de PR</strong></td>
+<td>"revisa a segurança desse PR/diff"</td>
+<td>só o que mudou (<code>git diff develop...HEAD</code>)</td>
+</tr>
+<tr>
+<td><strong>Correção</strong></td>
+<td>"corrige o que encontrou"</td>
+<td>os achados aprovados, um por vez</td>
+</tr>
+</tbody>
+</table>
+<p>Sempre nesta ordem: <strong>detectar → escanear → revisar → classificar → reportar → corrigir</strong>.
+Nunca corrija antes de reportar — a pessoa decide o que entra.</p>
+<p>A referência completa (riscos, exemplos, checklists por tema) está em <code>checklist.md</code> nesta
+pasta. Este arquivo é o procedimento.</p>
+<div class="markdown-heading"><h2 class="heading-element">1. Detectar a stack e o que há disponível</h2><a id="user-content-1-detectar-a-stack-e-o-que-há-disponível" class="anchor" aria-label="Permalink: 1. Detectar a stack e o que há disponível" href="#1-detectar-a-stack-e-o-que-há-disponível"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<div class="highlight highlight-source-shell"><pre>ls composer.json package.json requirements.txt pyproject.toml go.mod Dockerfile .env .env.example <span class="pl-k">2&gt;</span>/dev/null</pre></div>
+<table>
+<thead>
+<tr>
+<th>Encontrou</th>
+<th>Stack</th>
+<th>Sinais de IA/LLM no projeto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>composer.json</code></td>
+<td>PHP — Laravel se <code>laravel/framework</code>
+</td>
+<td>
+<code>openai-php</code>, <code>anthropic</code>
+</td>
+</tr>
+<tr>
+<td><code>package.json</code></td>
+<td>Node/JS/TS — Express, Next, Nest, Fastify</td>
+<td>
+<code>openai</code>, <code>@anthropic-ai/sdk</code>, <code>langchain</code>, <code>@pinecone-database</code>, <code>chromadb</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>requirements.txt</code> / <code>pyproject.toml</code>
+</td>
+<td>Python — Django, FastAPI, Flask</td>
+<td>
+<code>openai</code>, <code>anthropic</code>, <code>langchain</code>, <code>llama-index</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Se houver sinais de LLM, a seção 5 é <strong>obrigatória</strong>. Verifique também quais scanners estão
+instalados (<code>which gitleaks semgrep trivy</code>) — use os que existirem; <strong>não instale nada</strong> sem
+perguntar.</p>
+<div class="markdown-heading"><h2 class="heading-element">2. Escanear com as ferramentas do ecossistema</h2><a id="user-content-2-escanear-com-as-ferramentas-do-ecossistema" class="anchor" aria-label="Permalink: 2. Escanear com as ferramentas do ecossistema" href="#2-escanear-com-as-ferramentas-do-ecossistema"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Rode o que se aplica e guarde a saída para o relatório:</p>
+<table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>Dependências (SCA)</th>
+<th>Secrets</th>
+<th>Estático</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node</td>
+<td>
+<code>npm audit --json</code> (ou <code>pnpm audit</code> / <code>yarn audit</code>)</td>
+<td><code>gitleaks detect --no-git -v</code></td>
+<td><code>semgrep --config p/owasp-top-ten --config p/javascript</code></td>
+</tr>
+<tr>
+<td>PHP/Laravel</td>
+<td><code>composer audit --format=json</code></td>
+<td>idem</td>
+<td><code>semgrep --config p/php</code></td>
+</tr>
+<tr>
+<td>Python</td>
+<td>
+<code>pip-audit</code> ou <code>pip audit</code>
+</td>
+<td>idem</td>
+<td>
+<code>semgrep --config p/python</code> + <code>bandit -r .</code>
+</td>
+</tr>
+<tr>
+<td>Qualquer</td>
+<td>—</td>
+<td>
+<code>git log -p --all -S "sk-" | head</code> (secrets no histórico)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Sem gitleaks, faça a busca básica de secrets:</p>
+<div class="highlight highlight-source-shell"><pre>grep -rnE <span class="pl-s"><span class="pl-pds">"</span>(sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36}|-----BEGIN (RSA |EC )?PRIVATE KEY|password\s*=\s*['<span class="pl-cce">\"</span>][^'<span class="pl-cce">\"</span>]{6,}|api[_-]?key\s*[:=]\s*['<span class="pl-cce">\"</span>][^'<span class="pl-cce">\"</span>]{10,})<span class="pl-pds">"</span></span> \
+  --include=<span class="pl-k">*</span>.{js,ts,php,py,env,json,yml,yaml} --exclude-dir={node_modules,vendor,.git,dist,build} <span class="pl-c1">.</span></pre></div>
+<p>Confira também se <code>.env</code> está no <code>.gitignore</code> <strong>e</strong> se nunca foi commitado
+(<code>git log --all --oneline -- .env</code>).</p>
+<div class="markdown-heading"><h2 class="heading-element">3. Procurar os padrões perigosos no código</h2><a id="user-content-3-procurar-os-padrões-perigosos-no-código" class="anchor" aria-label="Permalink: 3. Procurar os padrões perigosos no código" href="#3-procurar-os-padrões-perigosos-no-código"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Grep é triagem, não veredito: <strong>abra cada match e confirme</strong> se a entrada é controlada pelo
+usuário e se existe validação/escape antes. Só reporte o que confirmou.</p>
+<div class="markdown-heading"><h3 class="heading-element">Injection (SQL, comando, template)</h3><a id="user-content-injection-sql-comando-template" class="anchor" aria-label="Permalink: Injection (SQL, comando, template)" href="#injection-sql-comando-template"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<table>
+<thead>
+<tr>
+<th>Stack</th>
+<th>Padrão suspeito</th>
+<th>Seguro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node</td>
+<td>
+<code>query(`...${</code> · <code>query("..." + </code>
+</td>
+<td>placeholders <code>?</code> / <code>$1</code>, query builder com bindings</td>
+</tr>
+<tr>
+<td>Laravel</td>
+<td>
+<code>DB::raw(</code>, <code>whereRaw(</code>, <code>selectRaw(</code>, <code>DB::statement(</code> com variável</td>
+<td>
+<code>where('col', $v)</code>, <code>whereRaw('col = ?', [$v])</code>
+</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>
+<code>f"SELECT ... {</code>, <code>"..." % (</code>, <code>.format(</code> em SQL</td>
+<td>parâmetros do driver, ORM</td>
+</tr>
+<tr>
+<td>Qualquer</td>
+<td>
+<code>exec(</code>, <code>spawn(</code> com shell, <code>shell_exec(</code>, <code>system(</code>, <code>passthru(</code>, <code>subprocess(..., shell=True)</code>
+</td>
+<td>lista de argumentos sem shell; allowlist do comando</td>
+</tr>
+<tr>
+<td>Qualquer</td>
+<td>
+<code>eval(</code>, <code>new Function(</code>, <code>unserialize(</code>, <code>pickle.loads(</code> em dado externo</td>
+<td>não usar; JSON com schema</td>
+</tr>
+</tbody>
+</table>
+<div class="markdown-heading"><h3 class="heading-element">XSS e saída para o navegador</h3><a id="user-content-xss-e-saída-para-o-navegador" class="anchor" aria-label="Permalink: XSS e saída para o navegador" href="#xss-e-saída-para-o-navegador"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<table>
+<thead>
+<tr>
+<th>Padrão suspeito</th>
+<th>Seguro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>innerHTML =</code>, <code>outerHTML =</code>, <code>document.write(</code>, <code>insertAdjacentHTML(</code> com dado externo</td>
+<td>
+<code>textContent</code>; sanitizar com DOMPurify se HTML for inevitável</td>
+</tr>
+<tr>
+<td>React <code>dangerouslySetInnerHTML</code>
+</td>
+<td>idem</td>
+</tr>
+<tr>
+<td>Blade <code>{!! $x !!}</code>
+</td>
+<td>
+<code>{{ $x }}</code> (escapado)</td>
+</tr>
+<tr>
+<td>Django/Jinja <code>|safe</code>, <code>mark_safe(</code>, <code>{% autoescape off %}</code>
+</td>
+<td>escape padrão</td>
+</tr>
+<tr>
+<td>
+<code>res.send(</code> / <code>echo</code> de entrada sem escape em HTML</td>
+<td>template com escape; <code>Content-Type</code> correto</td>
+</tr>
+</tbody>
+</table>
+<div class="markdown-heading"><h3 class="heading-element">Autorização, IDOR e acesso</h3><a id="user-content-autorização-idor-e-acesso" class="anchor" aria-label="Permalink: Autorização, IDOR e acesso" href="#autorização-idor-e-acesso"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>Rota que recebe <code>id</code> na URL e busca direto (<code>find($id)</code>, <code>findById(req.params.id)</code>) <strong>sem
+checar o dono</strong> (<code>where user_id = auth()</code>, policy, guard) → IDOR.</li>
+<li>Laravel: <code>$request-&gt;all()</code> em <code>create</code>/<code>update</code> sem <code>$fillable</code>/<code>$guarded</code> → mass assignment.</li>
+<li>Middleware de auth ausente em rota que muda estado; checagem só no front-end.</li>
+<li>Multi-tenant: consulta sem filtro de <code>tenant_id</code>.</li>
+</ul>
+<div class="markdown-heading"><h3 class="heading-element">Upload, arquivos e rede</h3><a id="user-content-upload-arquivos-e-rede" class="anchor" aria-label="Permalink: Upload, arquivos e rede" href="#upload-arquivos-e-rede"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>Path traversal: caminho montado com entrada do usuário (<code>path.join(base, req.query.file)</code>,
+<code>storage_path($name)</code>) sem normalizar e conferir que ficou dentro da base.</li>
+<li>Upload: extensão/MIME não validados, arquivo servido do mesmo domínio, nome original mantido.</li>
+<li>SSRF: <code>fetch(url)</code>, <code>axios.get(url)</code>, <code>Http::get($url)</code>, <code>file_get_contents($url)</code>,
+<code>requests.get(url)</code> com URL vinda do usuário, sem allowlist de domínio e bloqueio de IP privado.</li>
+<li>CORS <code>*</code> com credenciais; cookies sem <code>HttpOnly</code>/<code>Secure</code>/<code>SameSite</code>.</li>
+<li>Redirect com destino vindo da query (<code>redirect($request-&gt;url)</code>) sem allowlist.</li>
+</ul>
+<div class="markdown-heading"><h3 class="heading-element">Inclusão de arquivos (LFI / RFI)</h3><a id="user-content-inclusão-de-arquivos-lfi--rfi" class="anchor" aria-label="Permalink: Inclusão de arquivos (LFI / RFI)" href="#inclusão-de-arquivos-lfi--rfi"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>
+<code>include</code>/<code>require</code>/<code>include_once</code> com caminho vindo de entrada (<code>include($_GET['page'])</code>,
+<code>require "pages/$name.php"</code>) → LFI; com <code>allow_url_include=On</code>, vira RFI (código remoto).</li>
+<li>Node: <code>require(userInput)</code>, <code>import(userInput)</code>, <code>res.render(req.query.view)</code>; Python:
+<code>__import__(name)</code>, <code>importlib.import_module(user)</code>, <code>open(path)</code> com caminho externo.</li>
+<li>Seguro: <strong>allowlist</strong> de nomes válidos (<code>['home','about']</code>), nunca o caminho; <code>allow_url_include=Off</code>.</li>
+</ul>
+<div class="markdown-heading"><h3 class="heading-element">CSRF e clickjacking</h3><a id="user-content-csrf-e-clickjacking" class="anchor" aria-label="Permalink: CSRF e clickjacking" href="#csrf-e-clickjacking"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<table>
+<thead>
+<tr>
+<th>Padrão suspeito</th>
+<th>Seguro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Laravel: rota em <code>web.php</code> fora do middleware <code>web</code>, ou <code>$except</code> no <code>VerifyCsrfToken</code> com rotas de estado</td>
+<td>manter <code>@csrf</code> nos forms e o middleware ativo; exceções só para webhooks com assinatura própria</td>
+</tr>
+<tr>
+<td>Node: <code>POST/PUT/DELETE</code> com sessão por cookie e sem token CSRF (<code>csurf</code>/<code>csrf-csrf</code>/double-submit)</td>
+<td>token por sessão ou <code>SameSite=Lax/Strict</code> <strong>e</strong> checagem de <code>Origin</code>
+</td>
+</tr>
+<tr>
+<td>Django: <code>@csrf_exempt</code> em view que muda estado; <code>CsrfViewMiddleware</code> removido</td>
+<td>manter o middleware; exemption só com justificativa</td>
+</tr>
+<tr>
+<td>Estado mudado via <code>GET</code> (<code>/delete?id=</code>)</td>
+<td>mutação só em <code>POST/PUT/DELETE</code>
+</td>
+</tr>
+<tr>
+<td>Sem <code>X-Frame-Options</code> nem <code>Content-Security-Policy: frame-ancestors</code>
+</td>
+<td>
+<code>frame-ancestors 'self'</code> (ou <code>'none'</code>) — clickjacking; <code>helmet</code> no Node, <code>SecurityHeaders</code>/middleware no Laravel</td>
+</tr>
+<tr>
+<td>Sem <code>Strict-Transport-Security</code>, <code>X-Content-Type-Options: nosniff</code>, <code>Referrer-Policy</code>
+</td>
+<td>headers de segurança no servidor ou no middleware</td>
+</tr>
+</tbody>
+</table>
+<div class="markdown-heading"><h3 class="heading-element">Autenticação, sessão e bypass</h3><a id="user-content-autenticação-sessão-e-bypass" class="anchor" aria-label="Permalink: Autenticação, sessão e bypass" href="#autenticação-sessão-e-bypass"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>
+<strong>Bypass:</strong> rota que muda estado sem middleware de auth; auth checada só no front; <code>if (user)</code>
+onde <code>user</code> pode vir do cliente (header/cookie forjável, <code>X-User-Id</code>); endpoint de debug/admin
+esquecido (<code>/debug</code>, <code>/admin</code> sem guard); ordem errada de middleware (handler antes do auth).</li>
+<li>
+<strong>JWT:</strong> sem expiração; sem verificar assinatura (<code>alg: none</code>, <code>verify: false</code>, <code>decode()</code> em vez de
+<code>verify()</code>); segredo fraco/hardcoded; aceitar token de outro emissor/audience; sem revogação.</li>
+<li>
+<strong>Brute force:</strong> sem rate limit em login/reset/OTP/2FA; sem bloqueio ou atraso progressivo após
+tentativas; enumeração de usuário por mensagem diferente ("senha errada" vs "usuário não existe").</li>
+<li>
+<strong>Session fixation:</strong> id de sessão não regenerado no login (<code>session()-&gt;regenerate()</code>,
+<code>req.session.regenerate()</code>, <code>request.session.cycle_key()</code>); id aceito pela URL ou por cookie
+pré-existente.</li>
+<li>
+<strong>Session hijacking:</strong> cookie sem <code>HttpOnly</code>/<code>Secure</code>/<code>SameSite</code>; sessão sem expiração ou sem
+invalidação no logout e na troca de senha; token de sessão em URL, log ou <code>localStorage</code> exposto a XSS.</li>
+<li>Comparação de token/hash com <code>==</code> em vez de comparação em tempo constante.</li>
+<li>Senha com hash fraco (MD5/SHA1) ou sem salt; <code>bcrypt</code>/<code>argon2</code> é o esperado.</li>
+</ul>
+<div class="markdown-heading"><h3 class="heading-element">Condições de corrida (race condition)</h3><a id="user-content-condições-de-corrida-race-condition" class="anchor" aria-label="Permalink: Condições de corrida (race condition)" href="#condições-de-corrida-race-condition"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>Padrão <strong>ler → decidir → gravar</strong> sem lock ou transação em recurso disputado: saldo, estoque,
+cupom de uso único, "já votou?", limite de uso — permite gastar/usar duas vezes com requisições
+simultâneas.</li>
+<li>Seguro: <code>SELECT ... FOR UPDATE</code> / <code>lockForUpdate()</code> dentro de transação; <code>UPDATE ... WHERE saldo &gt;= ?</code>
+atômico; constraint <code>UNIQUE</code> para "uma vez só"; chave de idempotência em operações de pagamento.</li>
+<li>Teste negativo: disparar N requisições em paralelo e conferir que só uma passa.</li>
+</ul>
+<div class="markdown-heading"><h3 class="heading-element">Exposição de dados sensíveis, erros e logs</h3><a id="user-content-exposição-de-dados-sensíveis-erros-e-logs" class="anchor" aria-label="Permalink: Exposição de dados sensíveis, erros e logs" href="#exposição-de-dados-sensíveis-erros-e-logs"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>Stack trace, query ou payload retornados ao cliente (<code>APP_DEBUG=true</code> em produção,
+<code>app.use(errorHandler)</code> que vaza <code>err.stack</code>).</li>
+<li>Dado pessoal, token ou senha em log, em URL (<code>?token=</code>) ou em resposta de API além do necessário
+(serializar o model inteiro: <code>return $user</code>, <code>res.json(user)</code> com hash/e-mail/documento).</li>
+<li>Tráfego sem TLS; <code>.git/</code>, <code>.env</code>, backups ou <code>phpinfo</code> servidos publicamente; listagem de diretório.</li>
+<li>Dado sensível armazenado em claro quando deveria ser hash ou cifrado; sem mascaramento em telas/logs.</li>
+</ul>
+<div class="markdown-heading"><h2 class="heading-element">4. Dependências e supply chain</h2><a id="user-content-4-dependências-e-supply-chain" class="anchor" aria-label="Permalink: 4. Dependências e supply chain" href="#4-dependências-e-supply-chain"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Além do <code>audit</code>: versões fixadas e <strong>lockfile versionado</strong>; pacotes com nome parecido com o de
+uma lib conhecida (typosquatting); dependência adicionada só para uma função trivial;
+implementação própria de cripto/auth onde existe solução consolidada; imagem Docker
+<code>latest</code> ou sem scan (<code>trivy image</code> se houver).</p>
+<div class="markdown-heading"><h2 class="heading-element">5. Se o projeto usa LLM, RAG ou agentes</h2><a id="user-content-5-se-o-projeto-usa-llm-rag-ou-agentes" class="anchor" aria-label="Permalink: 5. Se o projeto usa LLM, RAG ou agentes" href="#5-se-o-projeto-usa-llm-rag-ou-agentes"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Trate como <strong>fronteira de confiança nova</strong> — o modelo não é camada de segurança.</p>
+<table>
+<thead>
+<tr>
+<th>Risco</th>
+<th>Como identificar</th>
+<th>Como corrigir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Insecure output handling</strong></td>
+<td>saída do modelo vai para <code>query(</code>, <code>exec(</code>, <code>eval(</code>, <code>innerHTML</code>, <code>fetch(url)</code> sem passar por validação</td>
+<td>schema (JSON Schema/zod/Pydantic) → validação → <strong>autorização no código</strong> → execução controlada</td>
+</tr>
+<tr>
+<td><strong>Prompt injection</strong></td>
+<td>entrada do usuário ou documento do RAG concatenado ao system prompt; ações disparadas só pelo conteúdo recuperado</td>
+<td>separar instrução de dado; tratar RAG como não confiável; decisão de ação fora do LLM</td>
+</tr>
+<tr>
+<td><strong>Excessive agency</strong></td>
+<td>tool <code>executar_sql</code>, credencial admin, tool de deleção sem confirmação, sem limite de chamadas</td>
+<td>menor privilégio por tool; autorização própria em cada tool; human-in-the-loop em ação destrutiva; limite de iterações</td>
+</tr>
+<tr>
+<td><strong>Vazamento via RAG</strong></td>
+<td>vector DB compartilhado sem filtro de <code>tenant_id</code>/<code>user_id</code> <strong>no retrieval</strong>
+</td>
+<td>filtrar <strong>antes</strong> de recuperar; metadados de acesso por documento; remover embeddings de documento excluído</td>
+</tr>
+<tr>
+<td><strong>Vazamento em logs</strong></td>
+<td>prompt/resposta com PII, token ou documento privado gravados</td>
+<td>logar id da requisição, usuário, tool, decisão de autorização, resultado — não o conteúdo</td>
+</tr>
+<tr>
+<td><strong>Secrets no prompt</strong></td>
+<td>chave/senha dentro de prompt ou system prompt</td>
+<td>secret manager / variável de ambiente</td>
+</tr>
+<tr>
+<td><strong>SSRF via tool</strong></td>
+<td>tool HTTP com URL controlada pelo modelo/usuário</td>
+<td>allowlist de domínio, bloqueio de IP privado, timeout, limite de resposta</td>
+</tr>
+</tbody>
+</table>
+<p>Regra de arquitetura a cobrar: <code>INPUT → VALIDATE → AUTHENTICATE → AUTHORIZE → LLM → VALIDATE OUTPUT → BUSINESS RULES → EXECUTE → AUDIT</code>. Nunca <code>INPUT → LLM → EXECUTE</code>.</p>
+<div class="markdown-heading"><h2 class="heading-element">6. Classificar</h2><a id="user-content-6-classificar" class="anchor" aria-label="Permalink: 6. Classificar" href="#6-classificar"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<table>
+<thead>
+<tr>
+<th>Nível</th>
+<th>Critério</th>
+<th>Exemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔴 <strong>Crítica</strong>
+</td>
+<td>explorável remotamente sem autenticação, ou vaza/destrói dados de terceiros</td>
+<td>SQL injection, RCE, secret válido no repo, IDOR em dado de outro usuário, output de LLM executado direto</td>
+</tr>
+<tr>
+<td>🟠 <strong>Alta</strong>
+</td>
+<td>explorável por usuário autenticado ou com pré-condição plausível</td>
+<td>XSS armazenado, SSRF interno, mass assignment em campo sensível, JWT sem expiração</td>
+</tr>
+<tr>
+<td>🟡 <strong>Média</strong>
+</td>
+<td>reduz defesa ou exige cadeia de falhas</td>
+<td>CORS permissivo, sem rate limit, cookie sem flags, dependência com CVE sem caminho claro de exploração</td>
+</tr>
+<tr>
+<td>🔵 <strong>Baixa</strong>
+</td>
+<td>higiene e boas práticas</td>
+<td>log verboso, header de segurança ausente, versão desatualizada sem CVE</td>
+</tr>
+</tbody>
+</table>
+<p>Falso positivo confirmado <strong>não entra</strong> no relatório. Achado que você não conseguiu confirmar
+entra como "a verificar", separado.</p>
+<div class="markdown-heading"><h2 class="heading-element">7. Reportar</h2><a id="user-content-7-reportar" class="anchor" aria-label="Permalink: 7. Reportar" href="#7-reportar"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Sempre antes de corrigir. Formato:</p>
+<pre><code>## Security Review — &lt;projeto ou PR #N&gt;
+Stack: Laravel 11 · Node 20 (front) · usa OpenAI SDK
+Ferramentas: composer audit ✓ · npm audit ✓ · gitleaks ✗ (não instalado) · semgrep ✗
+
+### Resumo
+🔴 2 · 🟠 3 · 🟡 4 · 🔵 2 · a verificar: 1
+
+### Achados
+🔴 SQL injection — app/Http/Controllers/ReportController.php:48
+   `DB::select("... WHERE status = '$status'")` com $status vindo da query string.
+   Correção: binding `DB::select('... WHERE status = ?', [$status])`.
+
+🟠 IDOR — routes/api.php:31 + OrderController@show
+   `Order::findOrFail($id)` sem checar o dono. Correção: `auth()-&gt;user()-&gt;orders()-&gt;findOrFail($id)` ou Policy.
+…
+
+### Dependências
+composer audit: 1 pacote com CVE (…) · npm audit: 3 high, 12 moderate
+
+### Recomendação
+Bloquear merge até resolver as 🔴. As 🟠 entram no mesmo PR ou em card próprio, à escolha do time.
+</code></pre>
+<p>Cada achado tem <strong>arquivo:linha, o que é, por que é explorável e a correção proposta</strong>. Sem
+os quatro, não é achado — é palpite.</p>
+<div class="markdown-heading"><h2 class="heading-element">8. Corrigir (só depois do OK)</h2><a id="user-content-8-corrigir-só-depois-do-ok" class="anchor" aria-label="Permalink: 8. Corrigir (só depois do OK)" href="#8-corrigir-só-depois-do-ok"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>
+<strong>Um achado por vez</strong>, começando pelas 🔴. Peça confirmação antes de mexer em autenticação,
+autorização ou cripto — são as mudanças com mais efeito colateral.</li>
+<li>Corrija a <strong>causa</strong>, não o sintoma: placeholder em vez de escapar a string; policy em vez de
+<code>if</code> solto na rota; schema de saída em vez de regex na resposta do LLM.</li>
+<li>
+<strong>Escreva o teste negativo</strong> junto com a correção (a entrada maliciosa deve falhar) — é o que
+impede a regressão.</li>
+<li>Secret encontrado no repositório: <strong>rotacione primeiro</strong>, depois remova do código e do
+histórico. Remover sem rotacionar não resolve nada.</li>
+<li>Não "arrume" desabilitando a proteção (CSRF off, <code>verify: false</code>, <code>rejectUnauthorized: false</code>,
+<code>eslint-disable</code> em regra de segurança). Isso é achado novo, não correção.</li>
+<li>Se o projeto usa a skill <code>git-flow-delivery</code>, a correção segue o fluxo dela (branch, commit
+com o card, PR). Secret exposto e 🔴 explorável em produção são <strong>hotfix</strong>.</li>
+</ul>
+<div class="markdown-heading"><h2 class="heading-element">Mapa de cobertura (Pentest Web)</h2><a id="user-content-mapa-de-cobertura-pentest-web" class="anchor" aria-label="Permalink: Mapa de cobertura (Pentest Web)" href="#mapa-de-cobertura-pentest-web"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<p>Para conferir que a revisão não deixou buraco — cada item e onde ele é tratado neste arquivo:</p>
+<table>
+<thead>
+<tr>
+<th>Vulnerabilidade</th>
+<th>Seção</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SQL Injection</td>
+<td>Injection</td>
+</tr>
+<tr>
+<td>Cross-Site Scripting (XSS)</td>
+<td>XSS e saída para o navegador</td>
+</tr>
+<tr>
+<td>Cross-Site Request Forgery (CSRF)</td>
+<td>CSRF e clickjacking</td>
+</tr>
+<tr>
+<td>Broken Access Control · IDOR</td>
+<td>Autorização, IDOR e acesso</td>
+</tr>
+<tr>
+<td>Authentication Bypass · Brute Force · JWT Misconfiguration</td>
+<td>Autenticação, sessão e bypass</td>
+</tr>
+<tr>
+<td>Session Fixation · Session Hijacking</td>
+<td>Autenticação, sessão e bypass</td>
+</tr>
+<tr>
+<td>CORS Misconfiguration · Open Redirect</td>
+<td>Upload, arquivos e rede</td>
+</tr>
+<tr>
+<td>Sensitive Data Exposure</td>
+<td>Exposição de dados sensíveis, erros e logs</td>
+</tr>
+<tr>
+<td>SSRF · Path Traversal</td>
+<td>Upload, arquivos e rede</td>
+</tr>
+<tr>
+<td>Local / Remote File Inclusion</td>
+<td>Inclusão de arquivos (LFI / RFI)</td>
+</tr>
+<tr>
+<td>File Upload · Unrestricted File Upload</td>
+<td>Upload, arquivos e rede</td>
+</tr>
+<tr>
+<td>Clickjacking</td>
+<td>CSRF e clickjacking</td>
+</tr>
+<tr>
+<td>Race Condition</td>
+<td>Condições de corrida</td>
+</tr>
+<tr>
+<td>Prompt Injection · Excessive Agency · Insecure Output · RAG</td>
+<td>Se o projeto usa LLM, RAG ou agentes</td>
+</tr>
+</tbody>
+</table>
+<div class="markdown-heading"><h2 class="heading-element">Checklist rápido</h2><a id="user-content-checklist-rápido" class="anchor" aria-label="Permalink: Checklist rápido" href="#checklist-rápido"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<ul>
+<li>[ ] Stack detectada; sinais de LLM verificados</li>
+<li>[ ] <code>audit</code> de dependências rodado; secrets procurados (código <strong>e</strong> histórico)</li>
+<li>[ ] Todas as linhas do <strong>mapa de cobertura</strong> revisadas — matches <strong>confirmados</strong>
+</li>
+<li>[ ] Se há LLM: output handling, prompt injection, agency, RAG e logs checados</li>
+<li>[ ] Cada achado com arquivo:linha, exploração e correção; severidade atribuída</li>
+<li>[ ] Relatório entregue <strong>antes</strong> de qualquer alteração</li>
+<li>[ ] Correções aprovadas, uma por vez, com teste negativo; secrets rotacionados</li>
+</ul>
+<div class="markdown-heading"><h2 class="heading-element">Adaptando ao seu time</h2><a id="user-content-adaptando-ao-seu-time" class="anchor" aria-label="Permalink: Adaptando ao seu time" href="#adaptando-ao-seu-time"><span aria-hidden="true" class="octicon octicon-link"></span></a></div>
+<table>
+<thead>
+<tr>
+<th>O que</th>
+<th>Aqui</th>
+<th>No seu time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ferramentas</td>
+<td>gitleaks, semgrep, trivy se existirem</td>
+<td>as que o CI já roda (Snyk, SonarQube, CodeQL…)</td>
+</tr>
+<tr>
+<td>Severidade</td>
+<td>4 níveis acima</td>
+<td>o esquema do seu programa de segurança (CVSS, etc.)</td>
+</tr>
+<tr>
+<td>Política de merge</td>
+<td>bloquear com 🔴</td>
+<td>o acordo do time</td>
+</tr>
+<tr>
+<td>Regras extras de domínio</td>
+<td>—</td>
+<td>ex.: idempotência em cobranças, mascaramento de documentos, LGPD/GDPR</td>
+</tr>
+<tr>
+<td>Onde registrar</td>
+<td>relatório no PR/card</td>
+<td>ferramenta de vulnerabilidades do time</td>
+</tr>
+</tbody>
+</table>
+
+        </article>
+        <nav class="doc-nav">
+          <a href="/skills/">← Todas as skills</a>
+          <a href="/skills/second-brain/">Second Brain</a>
+          <a href="/skills/board-workflow/">Board Workflow</a>
+          <a href="/skills/git-flow-delivery/">Git Flow Delivery</a>
+        </nav>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <p class="footer-logo">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6l6 6-6 6" stroke="currentColor"/><path d="M13 6l6 6-6 6" stroke="var(--accent)"/></svg>
+            Luiz Siqueira
+          </p>
+          <p class="footer-tagline">Líder de Engenharia de Software</p>
+        </div>
+        <nav class="footer-nav" aria-label="Rodapé">
+          <a href="/#sobre">Sobre</a>
+          <a href="/#palestras">Palestras</a>
+          <a href="/skills/">Skills</a>
+          <a href="/#feed">Artigos</a>
+        </nav>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/luizsiqueira.s" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/luizs" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="https://github.com/luizsiqueira-eng" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"></path></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Luiz Siqueira. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+    <script>
+      document.querySelectorAll(".copy").forEach(function (btn) {
+        btn.addEventListener("click", async function () {
+          try { await navigator.clipboard.writeText(btn.dataset.cmd); btn.textContent = "Copiado!"; if (typeof gtag === "function") gtag("event", "copy_install", { skill: "security-review" }); setTimeout(function () { btn.textContent = "Copiar"; }, 1800); }
+          catch (e) { window.prompt("Copie o comando:", btn.dataset.cmd); }
+        });
+      });
+      const menuToggle = document.querySelector(".menu-toggle"), menu = document.querySelector("header nav");
+      if (menuToggle && menu) menuToggle.addEventListener("click", function () { const open = menu.classList.toggle("active"); menuToggle.setAttribute("aria-expanded", open ? "true" : "false"); });
+    </script>
+  </body>
+</html>

@@ -4,12 +4,16 @@
     <!-- Meta Tags Essenciais -->
     <meta charset="UTF-8" />
     <!-- Google Analytics (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJZ3DD90KN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-ZJZ3DD90KN');
+      // gtag.js entra depois do load: sai do caminho crítico sem perder a visita
+      window.addEventListener('load', function () {
+        var s = document.createElement('script'); s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZJZ3DD90KN'; document.head.appendChild(s);
+      });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
@@ -18,10 +22,12 @@
     <meta name="theme-color" content="#0b0e14" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" /></noscript>
     <meta
       name="description"
-      content="Luiz Siqueira é Engenheiro de Software e Líder de Times de Alta Performance. Forma engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco."
+      content="Luiz Siqueira é Líder de Engenharia de Software. Forma engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco."
     />
     <meta name="keywords" content="Luiz Siqueira, liderança de engenharia, times de alta performance, engenharia de software, palestrante" />
     <meta name="author" content="Luiz Siqueira" />
@@ -30,11 +36,11 @@
     <!-- Meta Tags para Redes Sociais (Open Graph) -->
     <meta
       property="og:title"
-      content="Luiz Siqueira | Engenheiro de Software e Líder de Times de Alta Performance"
+      content="Luiz Siqueira | Líder de Engenharia de Software"
     />
     <meta
       property="og:description"
-      content="Luiz Siqueira é Engenheiro de Software e Líder de Times de Alta Performance. Forma engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco."
+      content="Luiz Siqueira é Líder de Engenharia de Software. Forma engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco."
     />
     <meta property="og:image" content="https://luizsiqueira.com.br/og-home-v2.jpg" />
     <meta property="og:image:width" content="1200" />
@@ -49,17 +55,18 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Luiz Siqueira | Engenheiro de Software e Líder de Times de Alta Performance"
+      content="Luiz Siqueira | Líder de Engenharia de Software"
     />
     <meta
       name="twitter:description"
-      content="Luiz Siqueira é Engenheiro de Software e Líder de Times de Alta Performance. Forma engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco."
+      content="Luiz Siqueira é Líder de Engenharia de Software. Forma engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco."
     />
     <meta name="twitter:image" content="https://luizsiqueira.com.br/og-home-v2.jpg" />
 
     <!-- Meta Tag Canonical -->
     <link rel="canonical" href="https://luizsiqueira.com.br" />
-    <title>Luiz Siqueira | Engenheiro de Software e Líder de Times de Alta Performance</title>
+    <link rel="preload" as="image" href="thumbnail.webp" fetchpriority="high" />
+    <title>Luiz Siqueira | Líder de Engenharia de Software</title>
     <style>
       :root {
         --navy: #0b0e14;        /* header, footer, destaque escuro */
@@ -268,7 +275,7 @@
         /* termina na borda direita da viewport (a seção é centralizada) */
         right: calc((100% - 100vw) / 2);
         left: 42%;
-        background: url('sobre-bg.jpg') 62% bottom / auto 88% no-repeat;
+        background: url('sobre-bg.webp') 62% bottom / auto 88% no-repeat;
         opacity: 0.9;
         /* bordas suaves em todos os lados: a foto se dissolve no fundo da seção */
         -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%, #000 100%),
@@ -447,7 +454,7 @@
           right: calc((100% - 100vw) / 2);
           bottom: auto;
           height: 360px;
-          background: url('sobre-bg.jpg') 57% 4% / auto 150% no-repeat;
+          background: url('sobre-bg-960.webp') 57% 4% / auto 150% no-repeat;
           opacity: 0.95;
           -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 55%, transparent 100%);
           -webkit-mask-composite: source-over;
@@ -816,6 +823,12 @@
         height: 32px;
         transition: transform 0.3s;
       }
+      .social-handle {
+        align-self: center;
+        color: rgba(255, 255, 255, 0.85);
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
       .social-links a img:hover {
         transform: scale(1.1);
       }
@@ -829,6 +842,19 @@
         color: var(--accent); /* Altere para a cor desejada ao passar o mouse */
       }
     </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://luizsiqueira.com.br/#site",
+        "url": "https://luizsiqueira.com.br/",
+        "name": "Luiz Siqueira",
+        "alternateName": "luizsiqueira.com.br",
+        "inLanguage": "pt-BR",
+        "about": { "@id": "https://luizsiqueira.com.br/#luiz" },
+        "publisher": { "@id": "https://luizsiqueira.com.br/#luiz" }
+      }
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -858,17 +884,24 @@
       {
         "@context": "https://schema.org",
         "@type": "Person",
+        "@id": "https://luizsiqueira.com.br/#luiz",
         "name": "Luiz Siqueira",
-        "description": "Engenheiro de Software e Líder de Times de Alta Performance. Especialista em formar engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco.",
+        "alternateName": ["Luiz Siqueira Engenharia de Software", "luizsiqueira.s", "Luiz Siqueira dev"],
+        "image": "https://luizsiqueira.com.br/og-home-v2.jpg",
+        "mainEntityOfPage": "https://luizsiqueira.com.br/",
+        "nationality": "Brasil",
+        "description": "Líder de Engenharia de Software. Especialista em formar engenheiros que vão além do código e times que entregam valor real ao negócio. Cofundador do Papo de Dev e conselheiro da PHP Pernambuco.",
         "image": "https://luizsiqueira.com.br/thumbnail.jpg",
-        "jobTitle": "Engenheiro de Software e Líder de Times de Alta Performance",
+        "jobTitle": "Líder de Engenharia de Software",
         "url": "https://luizsiqueira.com.br",
         "sameAs": [
-          "https://www.linkedin.com/in/luizs",
           "https://www.instagram.com/luizsiqueira.s",
+          "https://www.linkedin.com/in/luizs",
           "https://github.com/luizsiqueira-eng",
-          "https://www.npmjs.com/package/@luizsiqueira/skills"
+          "https://www.npmjs.com/~luizsiqueira",
+          "https://papodedev.com.br"
         ],
+        "knowsLanguage": ["pt-BR", "en"],
         "knowsAbout": [
           "Liderança de engenharia de software",
           "Times de alta performance",
@@ -1000,9 +1033,7 @@
     </header>
 
     <section class="hero">
-      <video autoplay muted playsinline loop poster="thumbnail.jpg" aria-hidden="true">
-        <source src="luiz.mp4" type="video/mp4" />
-      </video>
+      <video muted playsinline loop preload="none" poster="thumbnail.webp" aria-hidden="true" data-src="luiz.mp4"></video>
       <div class="hero-content">
         <h1>Times que vão além do código</h1>
         <p>Liderança, tecnologia e pessoas gerando resultado real.</p>
@@ -1013,12 +1044,13 @@
     <section class="section" id="sobre">
       <h2>Sobre Luiz Siqueira</h2>
       <div class="social-links">
-        <a href="https://www.linkedin.com/in/luizs" target="_blank">
-          <img src="link.png" alt="LinkedIn" />
+        <a href="https://www.instagram.com/luizsiqueira.s" target="_blank" rel="me noopener" title="Luiz Siqueira no Instagram (@luizsiqueira.s)">
+          <img src="insta.png" alt="Luiz Siqueira no Instagram — @luizsiqueira.s" width="32" height="32" />
         </a>
-        <a href="https://www.instagram.com/luizsiqueira.s" target="_blank">
-          <img src="insta.png" alt="Instagram" />
+        <a href="https://www.linkedin.com/in/luizs" target="_blank" rel="me noopener" title="Luiz Siqueira no LinkedIn">
+          <img src="link.png" alt="Luiz Siqueira no LinkedIn" width="32" height="32" />
         </a>
+        <a class="social-handle" href="https://www.instagram.com/luizsiqueira.s" target="_blank" rel="me noopener">@luizsiqueira.s</a>
       </div>
       <div class="about">
         <div class="about-text">
@@ -1029,8 +1061,9 @@
           "O papel da liderança é gerar resultados através das pessoas."
         </blockquote>
         <p>
-          Com mais de 10 anos de experiência, bacharel em Ciência da Computação e pós-graduado em
-          Arquitetura de Software Full Cycle, Luiz Siqueira é especialista em formar engenheiros que
+          Luiz Siqueira é Líder de Engenharia de Software. Com mais de 10 anos de experiência, bacharel
+          em Ciência da Computação e pós-graduado em Arquitetura de Software Full Cycle, é especialista
+          em formar engenheiros que
           vão além do código. Profissionais que entendem o negócio, tomam decisões com contexto e
           entregam valor real. Ao longo da carreira, formou e liderou times que construíram produtos
           digitais de grande escala, contribuindo para plataformas que alcançaram a marca de
@@ -1068,21 +1101,30 @@
         <button class="carousel-btn prev" aria-label="Palestra anterior">&#8249;</button>
         <div class="palestras carousel-track">
         <div class="card">
-          <img src="alemdocodigo.jpg" alt="Além do Código - Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          <picture>
+            <source type="image/webp" srcset="alemdocodigo-600.webp 600w, alemdocodigo.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+            <img src="alemdocodigo.jpg" alt="Além do Código - Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          </picture>
           <h3>Além do Código: Liderando times de alta performance e entrega de valor na era da IA</h3>
           <p>
             A inteligência artificial transformou a dinâmica da engenharia de software, deslocando o foco da simples implementação para a entrega estratégica de valor. O grande desafio da liderança hoje não é mais apenas garantir a entrega técnica, mas capacitar times para que pensem como o negócio e utilizem a tecnologia como alavanca de crescimento. Nesta palestra, Luiz discute como o papel do líder técnico se expande nesta nova era e como a IA pode ser a maior aliada do líder para acelerar resultados, otimizar o tempo e permitir que o talento humano se concentre no que realmente gera impacto.
           </p>
         </div>
         <div class="card">
-          <img src="phpeste.jpg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          <picture>
+            <source type="image/webp" srcset="phpeste-600.webp 600w, phpeste.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+            <img src="phpeste.jpg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          </picture>
           <h3>Carreira dev: Como transformar Desafios em Grandes Conquistas</h3>
           <p>
             Luiz compartilha sua jornada de desenvolvedor a líder de equipes de alta performance, mostrando como transformar desafios em oportunidades na carreira de programação. Com mais de 10 anos de experiência em engenharia de software, aborda os passos essenciais para evoluir na profissão, superar obstáculos e alcançar grandes marcos, além de lições práticas para quem deseja trilhar um caminho de sucesso na área de tecnologia.
           </p>
         </div>
         <div class="card">
-          <img src="produto.jpg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          <picture>
+            <source type="image/webp" srcset="produto-600.webp 600w, produto.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+            <img src="produto.jpg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          </picture>
           <h3>
             Criando Produtos de Impacto: A Sinergia entre Tecnologia, Design e
             Inovação
@@ -1092,7 +1134,10 @@
           </p>
         </div>
         <div class="card">
-          <img src="devsquevoam.jpg" alt="Devs que Voam - Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          <picture>
+            <source type="image/webp" srcset="devsquevoam-600.webp 600w, devsquevoam.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+            <img src="devsquevoam.jpg" alt="Devs que Voam - Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          </picture>
           <h3>Devs que Voam: A arte de construir equipes fora da curva</h3>
           <p>
             Nesta palestra, Moisés Falcão e Luiz Siqueira compartilham aprendizados práticos sobre
@@ -1104,14 +1149,20 @@
           </p>
         </div>
         <div class="card">
-          <img src="godigital1.jpg" alt="Go Digital" loading="lazy" width="1200" height="800" />
+          <picture>
+            <source type="image/webp" srcset="godigital1-600.webp 600w, godigital1.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+            <img src="godigital1.jpg" alt="Go Digital" loading="lazy" width="1200" height="800" />
+          </picture>
           <h3>Dominando a tecnologia para sites de conteúdo</h3>
           <p>
             Como a tecnologia pode ser um diferencial estratégico para alavancar a audiência de sites de conteúdo. Luiz apresenta as melhores práticas para otimizar o desenvolvimento e a performance de sites — da escolha do CMS ao uso de inteligência artificial na entrega de conteúdo — e discute como front-end, back-end, indexação do Google, Core Web Vitals e SEO técnico potencializam o desempenho e a relevância nos mecanismos de busca.
           </p>
         </div>
         <div class="card">
-          <img src="falanorte.jpg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          <picture>
+            <source type="image/webp" srcset="falanorte-600.webp 600w, falanorte.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+            <img src="falanorte.jpg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          </picture>
           <h3>
             Inteligência Artificial em Ação: Como Automatizar Processos com
             Agentes de IA
@@ -1121,7 +1172,10 @@
           </p>
         </div>
         <div class="card">
-          <img src="lideranca.jpeg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          <picture>
+            <source type="image/webp" srcset="lideranca-600.webp 600w, lideranca.webp 1200w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+            <img src="lideranca.jpeg" alt="Luiz Siqueira" loading="lazy" width="1200" height="800" />
+          </picture>
           <h3>Segredo dos Devs de alta performance</h3>
           <p>
             A jornada de construção de um time de desenvolvimento de software de alta performance. Com foco em uma cultura sólida, processos eficientes e entrega contínua de valor, Luiz apresenta as estratégias e práticas que levaram a grandes resultados. Ideal para líderes e profissionais que buscam transformar suas equipes e alcançar novos patamares.
@@ -1327,10 +1381,10 @@
           <a href="#feed">Artigos</a>
         </nav>
         <div class="footer-social">
-          <a href="https://www.instagram.com/luizsiqueira.s" target="_blank" rel="noopener" aria-label="Instagram">
+          <a href="https://www.instagram.com/luizsiqueira.s" target="_blank" rel="me noopener" aria-label="Instagram">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"></circle></svg>
           </a>
-          <a href="https://www.linkedin.com/in/luizs" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/in/luizs" target="_blank" rel="me noopener" aria-label="LinkedIn">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
           </a>
           <a href="https://papodedev.com.br" target="_blank" rel="noopener" aria-label="Papo de Dev">
@@ -1356,6 +1410,14 @@
         else if (a.classList.contains("copy-btn")) gtag("event", "copy_install", { skill: (a.dataset.copy || "").replace("install-", "") });
         else if (a.classList.contains("read-more")) gtag("event", "read_more_talk");
       });
+
+      // Vídeo do hero só em telas grandes (no celular fica o poster: economiza ~2,7 MB)
+      (function () {
+        const v = document.querySelector(".hero video");
+        if (!v) return;
+        const wants = window.matchMedia("(min-width: 769px)").matches && !window.matchMedia("(prefers-reduced-data: reduce)").matches;
+        if (wants) { v.src = v.dataset.src; v.autoplay = true; v.load(); v.play().catch(function () {}); }
+      })();
 
       const menuToggle = document.querySelector(".menu-toggle");
       const menu = document.querySelector("header nav");
@@ -1467,8 +1529,10 @@
         }
         prevBtn.addEventListener("click", function () { track.scrollBy({ left: -cardStep(), behavior: "smooth" }); });
         nextBtn.addEventListener("click", function () { track.scrollBy({ left: cardStep(), behavior: "smooth" }); });
-        track.addEventListener("scroll", updateButtons);
-        window.addEventListener("resize", updateButtons);
+        let raf = 0;
+        const scheduleUpdate = function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; updateButtons(); }); };
+        track.addEventListener("scroll", scheduleUpdate, { passive: true });
+        window.addEventListener("resize", scheduleUpdate);
         updateButtons();
       });
 

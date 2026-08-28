@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <!-- Google Analytics (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJZ3DD90KN"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-ZJZ3DD90KN');
+      // gtag.js entra depois do load: sai do caminho crítico sem perder a visita
+      window.addEventListener('load', function () {
+        var s = document.createElement('script'); s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZJZ3DD90KN'; document.head.appendChild(s);
+      });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Skills para Claude Code e agentes de IA — Git Flow, Jira/Trello, Segurança Web, Segundo Cérebro | Luiz Siqueira</title>
@@ -322,7 +326,9 @@
     <meta name="theme-color" content="#0b0e14" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
     <style>
       :root {
         --navy: #0b0e14;
@@ -825,7 +831,7 @@
                 Copiar</button>
             </div>
             <div class="skill-links">
-              <a href="https://github.com/luizsiqueira-eng/skills/blob/main/skills/second-brain/SKILL.md" target="_blank" rel="noopener">Ver detalhes &rsaquo;</a>
+              <a href="/skills/second-brain/">Ver detalhes &rsaquo;</a>
             </div>
           </article>
           <article class="skill" id="board-workflow">
@@ -843,7 +849,7 @@
                 Copiar</button>
             </div>
             <div class="skill-links">
-              <a href="https://github.com/luizsiqueira-eng/skills/blob/main/skills/board-workflow/SKILL.md" target="_blank" rel="noopener">Ver detalhes &rsaquo;</a>
+              <a href="/skills/board-workflow/">Ver detalhes &rsaquo;</a>
             </div>
           </article>
           <article class="skill" id="security-review">
@@ -861,7 +867,7 @@
                 Copiar</button>
             </div>
             <div class="skill-links">
-              <a href="https://github.com/luizsiqueira-eng/skills/blob/main/skills/security-review/SKILL.md" target="_blank" rel="noopener">Ver detalhes &rsaquo;</a>
+              <a href="/skills/security-review/">Ver detalhes &rsaquo;</a>
             </div>
           </article>
           <article class="skill" id="git-flow-delivery">
@@ -879,7 +885,7 @@
                 Copiar</button>
             </div>
             <div class="skill-links">
-              <a href="https://github.com/luizsiqueira-eng/skills/blob/main/skills/git-flow-delivery/SKILL.md" target="_blank" rel="noopener">Ver detalhes &rsaquo;</a>
+              <a href="/skills/git-flow-delivery/">Ver detalhes &rsaquo;</a>
             </div>
           </article>
         <!-- skills:static:end -->
@@ -1069,7 +1075,7 @@
               ${copyButton(cmd)}
             </div>
             <div class="skill-links">
-              <a href="${esc(catalog.repo)}/blob/main/skills/${esc(s.name)}/SKILL.md" target="_blank" rel="noopener">Ver detalhes &rsaquo;</a>
+              <a href="/skills/${esc(s.name)}/">Ver detalhes &rsaquo;</a>
             </div>
           </article>`;
         }).join("");

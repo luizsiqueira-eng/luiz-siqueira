@@ -34,7 +34,7 @@ const cards = skills.map((s) => {
                 Copiar</button>
             </div>
             <div class="skill-links">
-              <a href="${esc(catalog.repo)}/blob/main/skills/${esc(s.name)}/SKILL.md" target="_blank" rel="noopener">Ver detalhes &rsaquo;</a>
+              <a href="/skills/${esc(s.name)}/">Ver detalhes &rsaquo;</a>
             </div>
           </article>`;
 }).join("\n");
@@ -163,4 +163,191 @@ ${skills.map((s) => `- https://raw.githubusercontent.com/luizsiqueira-eng/skills
 `;
 writeFileSync(join(root, "llms.txt"), llms);
 
-console.log(`ok: ${skills.length} skills → cards estáticos, JSON-LD, FAQ e llms.txt`);
+// ---------- páginas por skill: /skills/<nome>/ com o SKILL.md completo ----------
+// Conteúdo profundo e indexável por skill (uma URL por skill, com TechArticle + SoftwareApplication).
+// Fonte: SKILL.md no branch main do repositório; render via API de markdown do GitHub (gh api).
+import { execFileSync } from "node:child_process";
+import { mkdirSync, existsSync } from "node:fs";
+
+const RAW = "https://raw.githubusercontent.com/luizsiqueira-eng/skills/main/skills";
+const tpl = readFileSync(join(here, "index.html"), "utf8");
+const head = tpl.slice(tpl.indexOf("<style>"), tpl.indexOf("</style>") + 8); // reaproveita o CSS da página
+const header = tpl.slice(tpl.indexOf("<header>"), tpl.indexOf("</header>") + 9).replace('href="/skills/" class="active"', 'href="/skills/" class="active"');
+const footer = tpl.slice(tpl.indexOf("<footer>"), tpl.indexOf("</footer>") + 9);
+
+function fetchText(url) {
+  return execFileSync("curl", ["-sfL", url], { encoding: "utf8" });
+}
+function renderMarkdown(md) {
+  // gh api /markdown → HTML sanitizado pelo GitHub (tabelas, código, listas)
+  return execFileSync("gh", ["api", "/markdown", "-f", "mode=markdown", "-f", `text=${md}`], { encoding: "utf8", maxBuffer: 10 * 1024 * 1024 });
+}
+function stripFrontmatter(md) {
+  return md.replace(/^---\n[\s\S]*?\n---\n/, "");
+}
+
+let pages = 0;
+for (const s of skills) {
+  let md;
+  try { md = fetchText(`${RAW}/${s.name}/SKILL.md`); } catch { console.warn(`aviso: não baixei SKILL.md de ${s.name}; página não gerada`); continue; }
+  const body = renderMarkdown(stripFrontmatter(md))
+    .replace(/<h1[^>]*>[\s\S]*?<\/h1>\s*/, "") // o título já vai no hero
+    .replace(/<a href="#/g, '<a href="#'); // âncoras internas funcionam como estão
+  const cmd = `npx ${catalog.package} add ${s.name}`;
+  const url = `${PAGE}${s.name}/`;
+  const title = `${s.title || s.name} — skill para Claude Code | Luiz Siqueira`;
+  const desc = `${s.description} Instale com ${cmd}. Skill gratuita (MIT) para Claude Code e agentes de IA.`;
+  const ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "TechArticle", "@id": url, "headline": s.title || s.name, "description": s.description, "inLanguage": "pt-BR", "url": url,
+        "datePublished": s.added, "dateModified": new Date().toISOString().slice(0, 10), "author": author, "publisher": author,
+        "keywords": (s.tags || []).join(", "), "isPartOf": { "@id": PAGE }, "about": { "@id": `${PAGE}#${s.name}` },
+        "image": `${SITE}/og-skills-v2.jpg` },
+      { "@type": "SoftwareApplication", "@id": `${PAGE}#${s.name}`, "name": s.title || s.name, "alternateName": s.name, "description": s.description,
+        "applicationCategory": "DeveloperApplication", "operatingSystem": "macOS, Linux, Windows", "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" }, "license": "https://opensource.org/licenses/MIT",
+        "installUrl": `https://www.npmjs.com/package/${catalog.package}`, "codeRepository": catalog.repo,
+        "url": url, "sameAs": `${catalog.repo}/blob/main/skills/${s.name}/SKILL.md`, "datePublished": s.added, "author": author },
+      { "@type": "BreadcrumbList", "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Luiz Siqueira", "item": SITE + "/" },
+        { "@type": "ListItem", "position": 2, "name": "Skills", "item": PAGE },
+        { "@type": "ListItem", "position": 3, "name": s.title || s.name, "item": url } ] }
+    ]
+  };
+  const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Google Analytics (GA4) -->
+    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-ZJZ3DD90KN');window.addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-ZJZ3DD90KN';document.head.appendChild(s);});</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${esc(title)}</title>
+    <meta name="description" content="${esc(desc)}" />
+    <link rel="canonical" href="${url}" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="author" content="Luiz Siqueira" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="${esc(s.title || s.name)} — skill para Claude Code" />
+    <meta property="og:description" content="${esc(s.description)}" />
+    <meta property="og:url" content="${url}" />
+    <meta property="og:image" content="${SITE}/og-skills-v2.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Luiz Siqueira" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="${SITE}/og-skills-v2.jpg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0b0e14" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
+    ${head}
+    <style>
+      .doc-hero { background: var(--navy); color: #fff; padding: 3.2rem 0 2.6rem; }
+      .crumbs { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem; }
+      .crumbs a { color: rgba(255,255,255,0.8); } .crumbs a:hover { color: #fff; }
+      .doc-hero h1 { font-size: 2.3rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.5rem; }
+      .doc-hero .slug { font-family: var(--mono); color: #9db8ff; font-size: 0.95rem; }
+      .doc-hero .lead { margin-top: 0.9rem; color: rgba(255,255,255,0.78); font-size: 1.1rem; max-width: 60ch; }
+      .doc-hero .cmd { margin-top: 1.4rem; max-width: 720px; }
+      .doc-meta { display: flex; gap: 1.4rem; flex-wrap: wrap; margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+      .doc-meta a { color: rgba(255,255,255,0.85); border-bottom: 1px solid rgba(255,255,255,0.3); }
+      .doc { padding: 3rem 0 4rem; }
+      .doc .md { max-width: 820px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 2rem 2.4rem; }
+      .md h2 { font-size: 1.45rem; margin: 2rem 0 0.8rem; color: var(--heading); padding-top: 1.2rem; border-top: 1px solid var(--line); }
+      .md h2:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+      .md h3 { font-size: 1.1rem; margin: 1.5rem 0 0.6rem; color: var(--heading); }
+      .md p, .md li { line-height: 1.7; } .md ul, .md ol { padding-left: 1.4rem; } .md li { margin: 0.3rem 0; }
+      .md code { font-family: var(--mono); font-size: 0.88em; background: var(--bg); padding: 0.1em 0.4em; border-radius: 4px; }
+      .md pre { background: var(--navy); color: #d7dce5; border-radius: 8px; padding: 1rem 1.1rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.6; }
+      .md pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+      .md table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 0.92rem; display: block; overflow-x: auto; }
+      .md th, .md td { border: 1px solid var(--line); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+      .md th { background: var(--bg); font-weight: 600; }
+      .md blockquote { margin: 1rem 0; padding: 0.6rem 1rem; border-left: 3px solid var(--accent); background: var(--bg); color: var(--text); }
+      .md a { color: var(--accent); } .md a:hover { text-decoration: underline; }
+      .md input[type=checkbox] { margin-right: 0.4rem; }
+      .doc-nav { margin-top: 2rem; display: flex; gap: 1.4rem; flex-wrap: wrap; font-size: 0.95rem; font-weight: 600; }
+      .doc-nav a { color: var(--accent); }
+      @media (max-width: 768px) { .doc-hero h1 { font-size: 1.7rem; } .doc .md { padding: 1.4rem 1.2rem; } }
+    </style>
+    <script type="application/ld+json">
+${JSON.stringify(ld, null, 2)}
+    </script>
+  </head>
+  <body>
+    ${header}
+
+    <section class="doc-hero">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Você está em"><a href="/">Luiz Siqueira</a> › <a href="/skills/">Skills</a> › ${esc(s.title || s.name)}</nav>
+        <h1>${esc(s.title || s.name)}</h1>
+        <p class="slug">${esc(s.name)}${s.category ? ` · ${esc(s.category)}` : ""}</p>
+        <p class="lead">${esc(s.description)}</p>
+        <div class="cmd"><code>${esc(cmd)}</code><button type="button" class="copy ghost" data-cmd="${esc(cmd)}" aria-label="Copiar comando">Copiar</button></div>
+        <div class="doc-meta">
+          <span>Gratuita · MIT</span>
+          <a href="${esc(catalog.repo)}/blob/main/skills/${esc(s.name)}/SKILL.md" target="_blank" rel="noopener">Ver no GitHub</a>
+          <a href="https://www.npmjs.com/package/${esc(catalog.package)}" target="_blank" rel="noopener">npm</a>
+          ${s.added ? `<span>Publicada em ${esc(s.added)}</span>` : ""}
+        </div>
+      </div>
+    </section>
+
+    <section class="doc">
+      <div class="wrap">
+        <article class="md">
+${body}
+        </article>
+        <nav class="doc-nav">
+          <a href="/skills/">← Todas as skills</a>
+          ${skills.filter((x) => x.name !== s.name).map((x) => `<a href="/skills/${esc(x.name)}/">${esc(x.title || x.name)}</a>`).join("\n          ")}
+        </nav>
+      </div>
+    </section>
+
+    ${footer}
+    <script>
+      document.querySelectorAll(".copy").forEach(function (btn) {
+        btn.addEventListener("click", async function () {
+          try { await navigator.clipboard.writeText(btn.dataset.cmd); btn.textContent = "Copiado!"; if (typeof gtag === "function") gtag("event", "copy_install", { skill: "${esc(s.name)}" }); setTimeout(function () { btn.textContent = "Copiar"; }, 1800); }
+          catch (e) { window.prompt("Copie o comando:", btn.dataset.cmd); }
+        });
+      });
+      const menuToggle = document.querySelector(".menu-toggle"), menu = document.querySelector("header nav");
+      if (menuToggle && menu) menuToggle.addEventListener("click", function () { const open = menu.classList.toggle("active"); menuToggle.setAttribute("aria-expanded", open ? "true" : "false"); });
+    </script>
+  </body>
+</html>
+`;
+  const dir = join(here, s.name);
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, "index.html"), html);
+  pages++;
+}
+
+// ---------- sitemap: home, catálogo, páginas por skill ----------
+const today = new Date().toISOString().slice(0, 10);
+const smUrls = [
+  { loc: `${SITE}/`, freq: "monthly", pri: "1.0" },
+  { loc: PAGE, freq: "weekly", pri: "0.9" },
+  ...skills.map((s) => ({ loc: `${PAGE}${s.name}/`, freq: "monthly", pri: "0.8" })),
+  { loc: `${SITE}/skills/skills.json`, freq: "weekly", pri: "0.3" },
+];
+writeFileSync(join(root, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${smUrls.map((u) => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${u.freq}</changefreq>
+    <priority>${u.pri}</priority>
+  </url>`).join("\n")}
+</urlset>
+`);
+
+console.log(`ok: ${skills.length} skills → cards estáticos, JSON-LD, FAQ, llms.txt, ${pages} páginas por skill, sitemap`);
